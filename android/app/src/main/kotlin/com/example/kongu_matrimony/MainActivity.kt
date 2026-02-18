@@ -1,0 +1,5 @@
+package com.example.kongu_matrimony
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
