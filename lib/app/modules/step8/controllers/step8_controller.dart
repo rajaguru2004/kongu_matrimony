@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
@@ -8,21 +8,11 @@ import 'package:kongu_matrimony/app/routes/app_pages.dart';
 class Step8Controller extends GetxController {
   late RegisterModel registerModel;
 
-  final yourCasteController = TextEditingController();
-  final yourKootamController = TextEditingController();
-  final RxString yourDosham = 'No Dosham'.obs;
-  final yourStarController = TextEditingController();
-  final yourRasiController = TextEditingController();
+  final RxString profilePhotoPath = ''.obs;
   final RxBool isLoading = false.obs;
 
   final _api = ApiService();
-
-  final List<String> doshamOptions = [
-    'No Dosham',
-    'Chevvai Dosham',
-    'Rahu / Kethu Dosham',
-    "Doesn't Matter",
-  ];
+  final _picker = ImagePicker();
 
   @override
   void onInit() {
@@ -30,34 +20,37 @@ class Step8Controller extends GetxController {
     registerModel = Get.arguments as RegisterModel;
   }
 
-  @override
-  void onClose() {
-    yourCasteController.dispose();
-    yourKootamController.dispose();
-    yourStarController.dispose();
-    yourRasiController.dispose();
-    super.onClose();
+  Future<void> pickProfilePhoto() async {
+    final file = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+    if (file != null) {
+      profilePhotoPath.value = file.path;
+    }
   }
 
   Future<void> submitStep8() async {
-    if (yourCasteController.text.trim().isEmpty) {
-      Get.snackbar(
-        'Validation',
-        'Please enter your caste',
-        snackPosition: SnackPosition.BOTTOM,
+    isLoading.value = true;
+
+    String? uploadedUrl;
+    if (profilePhotoPath.value.isNotEmpty) {
+      final uploadResponse = await _api.uploadImage(
+        filePath: profilePhotoPath.value,
+        pathName: 'profile-photos',
+        id: registerModel.registerId,
+        tag: 'image_upload',
       );
-      return;
+      if (uploadResponse != null && uploadResponse['success'] == true) {
+        uploadedUrl = uploadResponse['data'];
+      }
     }
 
-    isLoading.value = true;
-    final response = await _api
-        .post(Endpoints.yourCaste(registerModel.registerId), {
-          'yourCaste': yourCasteController.text.trim(),
-          'yourKootam': yourKootamController.text.trim(),
-          'yourDosham': yourDosham.value,
-          'yourStar': yourStarController.text.trim(),
-          'yourRasi': yourRasiController.text.trim(),
-        });
+    final response = await _api.post(
+      Endpoints.step7(registerModel.registerId),
+      {'profilePhotoUrl': uploadedUrl ?? ''},
+      tag: 'signup_flow',
+    );
     isLoading.value = false;
 
     if (response != null && response['success'] == true) {

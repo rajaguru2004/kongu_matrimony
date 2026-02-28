@@ -11,82 +11,104 @@ class Step2View extends GetView<Step2Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: buildStepAppBar('Family & Personal Info', 2),
+      appBar: buildStepAppBar('Caste & Community', 2),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepIndicator(2, 8),
+            buildStepIndicator(2, 7),
             const SizedBox(height: 24),
 
-            buildSectionTitle('Personal Details'),
-            const SizedBox(height: 12),
-
-            Obx(
-              () => buildStepDropdown(
-                label: 'Marital Status',
-                value: controller.maritalStatus.value,
-                options: controller.maritalStatusOptions,
-                onChanged: (v) => controller.maritalStatus.value = v!,
+            const Text(
+              'Your Caste & Community',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A4B),
               ),
             ),
-            const SizedBox(height: 14),
-
-            Obx(
-              () => buildStepDropdown(
-                label: 'Height',
-                value: controller.height.value,
-                options: controller.heightOptions,
-                onChanged: (v) => controller.height.value = v!,
-              ),
+            const SizedBox(height: 8),
+            const Text(
+              'Tell us about your religious and community background',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
-            const SizedBox(height: 14),
-
-            Obx(
-              () => buildStepDropdown(
-                label: 'Any Disability',
-                value: controller.anyDisability.value,
-                options: controller.disabilityOptions,
-                onChanged: (v) => controller.anyDisability.value = v!,
-              ),
-            ),
-
             const SizedBox(height: 24),
-            buildSectionTitle('Family Details'),
-            const SizedBox(height: 12),
 
             Obx(
               () => buildStepDropdown(
-                label: 'Family Status',
-                value: controller.familyStatus.value,
-                options: controller.familyStatusOptions,
-                onChanged: (v) => controller.familyStatus.value = v!,
+                label: 'Caste (Optional)',
+                value: controller.caste.value.isEmpty
+                    ? 'Select Caste'
+                    : controller.caste.value,
+                options: ['Select Caste', ...controller.casteOptions],
+                onChanged: (v) =>
+                    controller.caste.value = v == 'Select Caste' ? '' : v!,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            buildStepTextField(
+              controller: controller.kootamController,
+              label: 'Kootam / Kulam (Optional)',
+              hint: 'Enter Kootam / Kulam',
+              icon: Icons.people_outline,
+            ),
+            const SizedBox(height: 14),
+
+            Obx(
+              () => buildStepDropdown(
+                label: 'Rasi *',
+                value: controller.rasi.value.isEmpty
+                    ? 'Select Rasi'
+                    : controller.rasi.value,
+                options: ['Select Rasi', ...controller.rasiOptions],
+                onChanged: (v) =>
+                    controller.rasi.value = v == 'Select Rasi' ? '' : v!,
               ),
             ),
             const SizedBox(height: 14),
 
             Obx(
               () => buildStepDropdown(
-                label: 'Family Type',
-                value: controller.familyType.value,
-                options: controller.familyTypeOptions,
-                onChanged: (v) => controller.familyType.value = v!,
+                label: 'Star (Nakshatram) *',
+                value: controller.star.value.isEmpty
+                    ? 'Select Star'
+                    : controller.star.value,
+                options: ['Select Star', ...controller.starOptions],
+                onChanged: (v) =>
+                    controller.star.value = v == 'Select Star' ? '' : v!,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            Obx(
+              () => buildDashedImagePicker(
+                label: 'Horoscope File (Optional)',
+                path: controller.horoscopeFilePath.value,
+                onTap: () => controller.pickHoroscope(),
               ),
             ),
             const SizedBox(height: 14),
 
             Obx(
               () => buildStepDropdown(
-                label: 'Family Values',
-                value: controller.familyValues.value,
-                options: controller.familyValuesOptions,
-                onChanged: (v) => controller.familyValues.value = v!,
+                label: 'Dosham (Optional)',
+                value: controller.dosham.value.isEmpty
+                    ? 'Select Dosham'
+                    : controller.dosham.value,
+                options: ['Select Dosham', ...controller.doshamOptions],
+                onChanged: (v) =>
+                    controller.dosham.value = v == 'Select Dosham' ? '' : v!,
               ),
             ),
 
             const SizedBox(height: 32),
-            buildNextButton(controller.isLoading, controller.submitStep2),
+            buildNextButton(
+              controller.isLoading,
+              controller.submitStep2,
+              label: 'Continue',
+            ),
             const SizedBox(height: 20),
           ],
         ),

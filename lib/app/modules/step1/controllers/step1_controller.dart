@@ -12,6 +12,11 @@ class Step1Controller extends GetxController {
 
   final emailController = TextEditingController();
   final alternatePhoneController = TextEditingController();
+  final placeOfBirthController = TextEditingController();
+  final addressController = TextEditingController();
+  final pincodeController = TextEditingController();
+  final stateController = TextEditingController();
+  final countryController = TextEditingController();
 
   final RxString dob = ''.obs;
   final RxString timeOfBirth = ''.obs;
@@ -24,10 +29,6 @@ class Step1Controller extends GetxController {
   final _api = ApiService();
   final _picker = ImagePicker();
 
-  // Sample placeholder URL sent to backend for image fields
-  static const String _sampleImageUrl =
-      'https://api.konguelitematrimony.co.in/uploads/sample-document.jpg';
-
   @override
   void onInit() {
     super.onInit();
@@ -38,6 +39,11 @@ class Step1Controller extends GetxController {
   void onClose() {
     emailController.dispose();
     alternatePhoneController.dispose();
+    placeOfBirthController.dispose();
+    addressController.dispose();
+    pincodeController.dispose();
+    stateController.dispose();
+    countryController.dispose();
     super.onClose();
   }
 
@@ -115,31 +121,71 @@ class Step1Controller extends GetxController {
       );
       return;
     }
+    if (placeOfBirthController.text.trim().isEmpty) {
+      Get.snackbar(
+        'Validation',
+        'Please enter your place of birth',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
 
     isLoading.value = true;
+
+    // Upload images first
+    final idFrontUrl = await _uploadFile(
+      identityProofFrontPath.value,
+      'id-proofs',
+    );
+    final idBackUrl = await _uploadFile(
+      identityProofBackPath.value,
+      'id-proofs',
+    );
+    final parentFrontUrl = await _uploadFile(
+      parentIdentityFrontPath.value,
+      'parent-id-proofs',
+    );
+    final parentBackUrl = await _uploadFile(
+      parentIdentityBackPath.value,
+      'parent-id-proofs',
+    );
+
     final response = await _api
         .post(Endpoints.step1(registerModel.registerId), {
           'email': emailController.text.trim(),
           'alternatePhone': alternatePhoneController.text.trim(),
-          'identityProofFront': identityProofFrontPath.value.isNotEmpty
-              ? _sampleImageUrl
-              : '',
-          'identityProofBack': identityProofBackPath.value.isNotEmpty
-              ? _sampleImageUrl
-              : '',
-          'parentIdentityFront': parentIdentityFrontPath.value.isNotEmpty
-              ? _sampleImageUrl
-              : '',
-          'parentIdentityBack': parentIdentityBackPath.value.isNotEmpty
-              ? _sampleImageUrl
-              : '',
+          'placeOfBirth': placeOfBirthController.text.trim(),
+          'address': addressController.text.trim(),
+          'pincode': pincodeController.text.trim(),
+          'state': stateController.text.trim(),
+          'country': countryController.text.trim(),
+          'identityProofFront': idFrontUrl ?? '',
+          'identityProofBack': idBackUrl ?? '',
+          'parentIdentityFront': parentFrontUrl ?? '',
+          'parentIdentityBack': parentBackUrl ?? '',
           'timeOfBirth': timeOfBirth.value,
           'dob': dob.value,
-        });
+        }, tag: 'signup_flow');
     isLoading.value = false;
 
     if (response != null && response['success'] == true) {
       Get.toNamed(Routes.STEP2, arguments: registerModel);
     }
+  }
+
+  Future<String?> _uploadFile(String filePath, String pathName) async {
+    if (filePath.isEmpty) return null;
+
+    final response = await _api.uploadImage(
+      filePath: filePath,
+      pathName: pathName,
+      id: registerModel.registerId,
+      tag: 'image_upload',
+    );
+
+    if (response != null && response['success'] == true) {
+      return response['data'] as String?;
+    }
+    return null;
   }
 }

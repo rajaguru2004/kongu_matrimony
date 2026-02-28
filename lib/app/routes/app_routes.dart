@@ -13,6 +13,7 @@ abstract class Routes {
   static const STEP6 = _Paths.STEP6;
   static const STEP7 = _Paths.STEP7;
   static const STEP8 = _Paths.STEP8;
+  static const OTP = _Paths.OTP;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const STEP6 = '/step6';
   static const STEP7 = '/step7';
   static const STEP8 = '/step8';
+  static const OTP = '/otp';
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
@@ -8,10 +7,62 @@ import 'package:kongu_matrimony/app/routes/app_pages.dart';
 class Step6Controller extends GetxController {
   late RegisterModel registerModel;
 
-  final aboutYouController = TextEditingController();
+  final RxString partnerCaste = 'Any'.obs;
+  final RxString partnerKootam = 'Any'.obs;
+  final RxString partnerStar = 'Any'.obs;
+  final RxString partnerRasi = 'Any'.obs;
+  final RxString partnerDosham = 'No'.obs;
+
   final RxBool isLoading = false.obs;
 
   final _api = ApiService();
+
+  final List<String> rasiOptions = [
+    'Any',
+    'Mesham',
+    'Rishabam',
+    'Midhunam',
+    'Kadagam',
+    'Simmam',
+    'Kanni',
+    'Thulaam',
+    'Viruchigam',
+    'Dhanusu',
+    'Magaram',
+    'Kumbam',
+    'Meenam',
+  ];
+
+  final List<String> starOptions = [
+    'Any',
+    'Ashwini',
+    'Bharani',
+    'Krithigai',
+    'Rohini',
+    'Mirugaseerishum',
+    'Thiruvadhirai',
+    'Punarpusam',
+    'Poosam',
+    'Ayilyam',
+    'Magam',
+    'Pooram',
+    'Uthiram',
+    'Hastham',
+    'Chithirai',
+    'Swathi',
+    'Visagam',
+    'Anusham',
+    'Kettai',
+    'Moolam',
+    'Pooradam',
+    'Uthiradam',
+    'Thiruvonam',
+    'Avittam',
+    'Sadhayam',
+    'Pooratathi',
+    'Uthiratathi',
+    'Revathi',
+  ];
 
   @override
   void onInit() {
@@ -19,26 +70,18 @@ class Step6Controller extends GetxController {
     registerModel = Get.arguments as RegisterModel;
   }
 
-  @override
-  void onClose() {
-    aboutYouController.dispose();
-    super.onClose();
-  }
-
   Future<void> submitStep6() async {
-    if (aboutYouController.text.trim().isEmpty) {
-      Get.snackbar(
-        'Validation',
-        'Please write something about yourself',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
-
     isLoading.value = true;
     final response = await _api.post(
-      Endpoints.step6(registerModel.registerId),
-      {'aboutYou': aboutYouController.text.trim()},
+      Endpoints.step5(registerModel.registerId),
+      {
+        'partnerCaste': partnerCaste.value.toLowerCase(),
+        'partnerKulam': partnerKootam.value.toLowerCase().replaceAll('any', ''),
+        'partnerStar': partnerStar.value.toLowerCase(),
+        'partnerRasi': partnerRasi.value.toLowerCase(),
+        'partnerDosham': partnerDosham.value.toLowerCase(),
+      },
+      tag: 'signup_flow',
     );
     isLoading.value = false;
 

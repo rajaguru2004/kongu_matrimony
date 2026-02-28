@@ -11,99 +11,101 @@ class Step3View extends GetView<Step3Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: buildStepAppBar('Education & Career', 3),
+      appBar: buildStepAppBar('Personal Details', 3),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepIndicator(3, 8),
+            buildStepIndicator(3, 7),
             const SizedBox(height: 24),
 
-            buildSectionTitle('Education'),
-            const SizedBox(height: 12),
-
-            buildStepTextField(
-              controller: controller.highestEducationController,
-              label: 'Highest Education',
-              hint: 'e.g. Bachelor of Engineering',
-              icon: Icons.school_outlined,
+            const Text(
+              'Tell us about your personal details',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A4B),
+              ),
             ),
-            const SizedBox(height: 14),
-
-            buildStepTextField(
-              controller: controller.additionalDegreeController,
-              label: 'Additional Degree (Optional)',
-              hint: 'e.g. MBA, M.Tech',
-              icon: Icons.menu_book_outlined,
-            ),
-
             const SizedBox(height: 24),
-            buildSectionTitle('Career'),
-            const SizedBox(height: 12),
+
+            Obx(
+              () => buildChipSelector(
+                label: 'Marital Status',
+                selectedValue: controller.maritalStatus.value,
+                options: controller.maritalStatusOptions,
+                onSelected: (v) => controller.maritalStatus.value = v,
+                isRequired: true,
+              ),
+            ),
+            const SizedBox(height: 24),
 
             Obx(
               () => buildStepDropdown(
-                label: 'Employed In',
-                value: controller.employedIn.value,
-                options: controller.employedInOptions,
-                onChanged: (v) => controller.employedIn.value = v!,
+                label: 'Height (Optional)',
+                value: controller.height.value.isEmpty
+                    ? 'Select Height'
+                    : controller.height.value,
+                options: ['Select Height', ...controller.heightOptions],
+                onChanged: (v) =>
+                    controller.height.value = v == 'Select Height' ? '' : v!,
               ),
             ),
-            const SizedBox(height: 14),
-
-            buildStepTextField(
-              controller: controller.occupationController,
-              label: 'Occupation',
-              hint: 'e.g. Software Engineer',
-              icon: Icons.work_outline,
-            ),
-            const SizedBox(height: 14),
-
-            buildStepTextField(
-              controller: controller.professionController,
-              label: 'Profession',
-              hint: 'e.g. IT Professional',
-              icon: Icons.badge_outlined,
-            ),
-            const SizedBox(height: 14),
-
-            buildStepTextField(
-              controller: controller.workLocationController,
-              label: 'Work Location',
-              hint: 'e.g. Chennai, Tamil Nadu',
-              icon: Icons.location_on_outlined,
-            ),
-
             const SizedBox(height: 24),
-            buildSectionTitle('Income & Net Worth'),
-            const SizedBox(height: 12),
 
-            buildStepTextField(
-              controller: controller.annualIncomeController,
-              label: 'Annual Income',
-              hint: 'e.g. 8,00,000 INR',
-              icon: Icons.currency_rupee,
+            Obx(
+              () => buildStepDropdown(
+                label: 'Family Status (Optional)',
+                value: controller.familyStatus.value.isEmpty
+                    ? 'Select Family Status'
+                    : controller.familyStatus.value,
+                options: [
+                  'Select Family Status',
+                  ...controller.familyStatusOptions,
+                ],
+                onChanged: (v) => controller.familyStatus.value =
+                    v == 'Select Family Status' ? '' : v!,
+              ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 24),
 
-            buildStepTextField(
-              controller: controller.additionalIncomeController,
-              label: 'Additional Income (Optional)',
-              hint: 'e.g. Freelancing - 1,00,000 INR',
-              icon: Icons.add_chart,
+            Obx(
+              () => buildChipSelector(
+                label: 'Family Type (Optional)',
+                selectedValue: controller.familyType.value,
+                options: controller.familyTypeOptions,
+                onSelected: (v) => controller.familyType.value = v,
+              ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 24),
 
-            buildStepTextField(
-              controller: controller.familyNetWorthController,
-              label: 'Family Net Worth (Optional)',
-              hint: 'e.g. 50,00,000 INR',
-              icon: Icons.account_balance_outlined,
+            Obx(
+              () => buildChipSelector(
+                label: 'Family Values (Optional)',
+                selectedValue: controller.familyValues.value,
+                options: controller.familyValuesOptions,
+                onSelected: (v) => controller.familyValues.value = v,
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            Obx(
+              () => buildChipSelector(
+                label: 'Any Disability',
+                selectedValue: controller.anyDisability.value,
+                options: controller.disabilityOptions,
+                onSelected: (v) => controller.anyDisability.value = v,
+                isRequired: true,
+              ),
             ),
 
-            const SizedBox(height: 32),
-            buildNextButton(controller.isLoading, controller.submitStep3),
+            const SizedBox(height: 40),
+            buildNextButton(
+              controller.isLoading,
+              controller.submitStep3,
+              label: 'Continue',
+            ),
             const SizedBox(height: 20),
           ],
         ),

@@ -68,6 +68,13 @@ class Step1View extends GetView<Step1Controller> {
                 onTap: () => controller.pickTime(context),
               ),
             ),
+            const SizedBox(height: 14),
+            buildStepTextField(
+              controller: controller.placeOfBirthController,
+              label: 'Place of Birth',
+              hint: 'Enter place of birth',
+              icon: Icons.location_on_outlined,
+            ),
 
             const SizedBox(height: 24),
             buildSectionTitle('Identity Documents'),
@@ -83,7 +90,7 @@ class Step1View extends GetView<Step1Controller> {
                 Expanded(
                   child: Obx(
                     () => _buildImagePicker(
-                      label: 'ID Proof Front',
+                      label: 'Id Proof Aadhaar or Passport *',
                       path: controller.identityProofFrontPath.value,
                       onTap: () => controller.pickImage('identityFront'),
                     ),
@@ -93,7 +100,7 @@ class Step1View extends GetView<Step1Controller> {
                 Expanded(
                   child: Obx(
                     () => _buildImagePicker(
-                      label: 'ID Proof Back',
+                      label: 'Id Proof Aadhaar or Passport *',
                       path: controller.identityProofBackPath.value,
                       onTap: () => controller.pickImage('identityBack'),
                     ),
@@ -111,7 +118,7 @@ class Step1View extends GetView<Step1Controller> {
                 Expanded(
                   child: Obx(
                     () => _buildImagePicker(
-                      label: 'Parent ID Front',
+                      label: 'Parent Id Proof Aadhaar or Passport *',
                       path: controller.parentIdentityFrontPath.value,
                       onTap: () => controller.pickImage('parentFront'),
                     ),
@@ -121,13 +128,53 @@ class Step1View extends GetView<Step1Controller> {
                 Expanded(
                   child: Obx(
                     () => _buildImagePicker(
-                      label: 'Parent ID Back',
+                      label: 'Parent Id Proof Aadhaar or Passport *',
                       path: controller.parentIdentityBackPath.value,
                       onTap: () => controller.pickImage('parentBack'),
                     ),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 24),
+            buildSectionTitle('Address Details'),
+            const SizedBox(height: 12),
+            buildStepTextField(
+              controller: controller.addressController,
+              label: 'Address (Optional)',
+              hint: 'Enter your address',
+              icon: Icons.home_outlined,
+              maxLines: 3,
+            ),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: buildStepTextField(
+                    controller: controller.stateController,
+                    label: 'State (Optional)',
+                    hint: 'Enter state',
+                    icon: Icons.map_outlined,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: buildStepTextField(
+                    controller: controller.pincodeController,
+                    label: 'Pin Code (Optional)',
+                    hint: 'Enter pincode',
+                    icon: Icons.pin_drop_outlined,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            buildStepTextField(
+              controller: controller.countryController,
+              label: 'Country (Optional)',
+              hint: 'Enter country',
+              icon: Icons.public_outlined,
             ),
 
             const SizedBox(height: 32),

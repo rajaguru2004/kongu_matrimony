@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
@@ -21,6 +20,8 @@ class InitialSignController extends GetxController {
     {'value': 'daughter', 'label': 'Daughter'},
     {'value': 'brother', 'label': 'Brother'},
     {'value': 'sister', 'label': 'Sister'},
+    {'value': 'relative', 'label': 'Relative'},
+    {'value': 'friend', 'label': 'Friend'},
   ];
 
   @override
@@ -52,18 +53,31 @@ class InitialSignController extends GetxController {
     }
 
     isLoading.value = true;
-    final response = await _api.post(Endpoints.register, {
+    final payload = {
       'profileFor': profileFor.value,
       'name': name,
       'phone': phone,
       'gender': gender.value,
-    });
+    };
+
+    final response = await _api.post(
+      Endpoints.sendOtp,
+      payload,
+      tag: 'signup_flow',
+    );
     isLoading.value = false;
 
     if (response != null && response['success'] == true) {
-      final data = response['data'] as Map<String, dynamic>;
-      final model = RegisterModel.fromJson(data);
-      Get.toNamed(Routes.STEP1, arguments: model);
+      Get.toNamed(
+        Routes.OTP,
+        arguments: {...payload, 'smsToken': response['smsToken']},
+      );
+    } else {
+      Get.snackbar(
+        'Error',
+        response?['message'] ?? 'Failed to send OTP',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

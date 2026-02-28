@@ -11,48 +11,67 @@ class Step5View extends GetView<Step5Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: buildStepAppBar('Partner Caste Preferences', 5),
+      appBar: buildStepAppBar('Partner Basic Info', 5),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepIndicator(5, 8),
+            buildStepIndicator(5, 7),
             const SizedBox(height: 24),
 
-            buildSectionTitle('Caste Preferences'),
-            const SizedBox(height: 12),
-
-            buildStepTextField(
-              controller: controller.partnerCasteController,
-              label: 'Partner Caste',
-              hint: 'e.g. Kongu Vellalar',
-              icon: Icons.people_outline,
+            const Text(
+              "Partner preferences help's to find the best companion",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A4B),
+              ),
             ),
-            const SizedBox(height: 14),
-
-            buildStepTextField(
-              controller: controller.partnerKulamController,
-              label: 'Partner Kulam / Gotra',
-              hint: 'e.g. Andai Kulam',
-              icon: Icons.family_restroom,
-            ),
-
             const SizedBox(height: 24),
-            buildSectionTitle('Horoscope Preference'),
+
+            buildSectionTitle('Partner Preferences'),
             const SizedBox(height: 12),
 
             Obx(
               () => buildStepDropdown(
-                label: 'Horoscope Match Type',
-                value: controller.partnerHoroscopeType.value,
-                options: controller.horoscopeOptions,
-                onChanged: (v) => controller.partnerHoroscopeType.value = v!,
+                label: 'Marital Status',
+                value: controller.partnerMaritalStatus.value,
+                options: controller.maritalStatusOptions,
+                onChanged: (v) => controller.partnerMaritalStatus.value = v!,
               ),
             ),
+            const SizedBox(height: 14),
 
-            const SizedBox(height: 32),
-            buildNextButton(controller.isLoading, controller.submitStep5),
+            buildStepTextField(
+              controller: controller.partnerEducationController,
+              label: 'Education',
+              hint: "e.g. Bachelor's Degree",
+              icon: Icons.school_outlined,
+            ),
+            const SizedBox(height: 14),
+
+            buildStepTextField(
+              controller: controller.partnerProfessionController,
+              label: 'Profession',
+              hint: 'e.g. Software Engineer',
+              icon: Icons.work_outline,
+            ),
+            const SizedBox(height: 14),
+
+            buildStepTextField(
+              controller: controller.partnerAnnualIncomeController,
+              label: 'Annual Income',
+              hint: 'e.g. 6,00,000 INR',
+              icon: Icons.currency_rupee,
+            ),
+
+            const SizedBox(height: 40),
+            buildNextButton(
+              controller.isLoading,
+              controller.submitStep5,
+              label: 'Continue',
+            ),
             const SizedBox(height: 20),
           ],
         ),

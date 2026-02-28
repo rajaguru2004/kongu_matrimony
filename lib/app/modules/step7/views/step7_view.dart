@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kongu_matrimony/app/routes/app_pages.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
@@ -14,158 +12,67 @@ class Step7View extends GetView<Step7Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: buildStepAppBar('Profile Photo', 7),
+      appBar: buildStepAppBar('About You', 7),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepIndicator(7, 8),
-            const SizedBox(height: 32),
+            buildStepIndicator(7, 7),
+            const SizedBox(height: 24),
 
-            Center(
-              child: Column(
-                children: [
-                  CommonText(
-                    'Upload Profile Photo',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textDark,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const CommonText(
-                    'A clear photo helps you get more responses',
-                    style: TextStyle(fontSize: 13, color: AppColors.textGrey),
-                  ),
-                  const SizedBox(height: 32),
+            const Text(
+              'Tell us about yourself',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A4B),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const CommonText(
+              'Write a brief description about your personality, hobbies, and what you are looking for in a partner.',
+              style: TextStyle(fontSize: 13, color: AppColors.textGrey),
+            ),
+            const SizedBox(height: 24),
 
-                  Obx(
-                    () => GestureDetector(
-                      onTap: controller.pickProfilePhoto,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 160,
-                            height: 160,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.primaryLight,
-                              border: Border.all(
-                                color: AppColors.primary,
-                                width: 3,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.2),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: controller.profilePhotoPath.value.isNotEmpty
-                                ? ClipOval(
-                                    child: Image.file(
-                                      File(controller.profilePhotoPath.value),
-                                      fit: BoxFit.cover,
-                                      width: 160,
-                                      height: 160,
-                                    ),
-                                  )
-                                : const Icon(
-                                    Icons.person,
-                                    size: 80,
-                                    color: AppColors.primary,
-                                  ),
-                          ),
-                          Positioned(
-                            bottom: 4,
-                            right: 4,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: AppColors.primary,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.camera_alt,
-                                color: AppColors.white,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  Obx(
-                    () => controller.profilePhotoPath.value.isNotEmpty
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.success.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  color: AppColors.success,
-                                  size: 16,
-                                ),
-                                SizedBox(width: 6),
-                                CommonText(
-                                  'Photo selected',
-                                  style: TextStyle(
-                                    color: AppColors.success,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : TextButton.icon(
-                            onPressed: controller.pickProfilePhoto,
-                            icon: const Icon(
-                              Icons.photo_library_outlined,
-                              color: AppColors.primary,
-                            ),
-                            label: const CommonText(
-                              'Choose from Gallery',
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.border),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF000000).withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
                 ],
+              ),
+              child: TextField(
+                controller: controller.aboutYouController,
+                maxLines: 8,
+                minLines: 6,
+                maxLength: 500,
+                style: const TextStyle(fontSize: 15, color: AppColors.textDark),
+                decoration: const InputDecoration(
+                  hintText:
+                      'e.g. I am a cheerful person who loves travelling and cooking. I am looking for a caring and understanding partner...',
+                  hintStyle: TextStyle(
+                    color: AppColors.textLight,
+                    fontSize: 14,
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(16),
+                ),
               ),
             ),
 
             const SizedBox(height: 40),
-            buildNextButton(controller.isLoading, controller.submitStep7),
-            const SizedBox(height: 8),
-            Center(
-              child: TextButton(
-                onPressed: () => Get.toNamed(
-                  Routes.STEP8,
-                  arguments: controller.registerModel,
-                ),
-                child: const CommonText(
-                  'Skip for now',
-                  style: TextStyle(color: AppColors.textGrey),
-                ),
-              ),
+            buildNextButton(
+              controller.isLoading,
+              controller.submitStep7,
+              label: 'Continue',
             ),
             const SizedBox(height: 20),
           ],

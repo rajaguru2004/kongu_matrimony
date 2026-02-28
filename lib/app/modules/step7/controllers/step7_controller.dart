@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
@@ -8,15 +8,10 @@ import 'package:kongu_matrimony/app/routes/app_pages.dart';
 class Step7Controller extends GetxController {
   late RegisterModel registerModel;
 
-  final RxString profilePhotoPath = ''.obs;
+  final aboutYouController = TextEditingController();
   final RxBool isLoading = false.obs;
 
   final _api = ApiService();
-  final _picker = ImagePicker();
-
-  // Sample URL sent to backend
-  static const String _samplePhotoUrl =
-      'https://api.konguelitematrimony.co.in/uploads/sample-profile.jpg';
 
   @override
   void onInit() {
@@ -24,25 +19,23 @@ class Step7Controller extends GetxController {
     registerModel = Get.arguments as RegisterModel;
   }
 
-  Future<void> pickProfilePhoto() async {
-    final file = await _picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 80,
-    );
-    if (file != null) {
-      profilePhotoPath.value = file.path;
-    }
+  @override
+  void onClose() {
+    aboutYouController.dispose();
+    super.onClose();
   }
 
   Future<void> submitStep7() async {
+    if (aboutYouController.text.trim().isEmpty) {
+      Get.snackbar('Validation', 'Please write something about yourself');
+      return;
+    }
+
     isLoading.value = true;
     final response = await _api.post(
-      Endpoints.step7(registerModel.registerId),
-      {
-        'profilePhotoUrl': profilePhotoPath.value.isNotEmpty
-            ? _samplePhotoUrl
-            : '',
-      },
+      Endpoints.step6(registerModel.registerId),
+      {'aboutYou': aboutYouController.text.trim()},
+      tag: 'signup_flow',
     );
     isLoading.value = false;
 

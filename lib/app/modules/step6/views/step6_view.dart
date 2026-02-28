@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
-import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step6_controller.dart';
 
@@ -12,49 +11,83 @@ class Step6View extends GetView<Step6Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: buildStepAppBar('About You', 6),
+      appBar: buildStepAppBar('Partner Religious Info', 6),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepIndicator(6, 8),
+            buildStepIndicator(6, 7),
             const SizedBox(height: 24),
 
-            buildSectionTitle('Tell us about yourself'),
-            const SizedBox(height: 6),
-            CommonText(
-              'Write a brief description about your personality, hobbies, and what you are looking for in a partner.',
-              style: TextStyle(fontSize: 13, color: AppColors.textGrey),
-            ),
-            const SizedBox(height: 16),
-
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.border),
-              ),
-              child: TextField(
-                controller: controller.aboutYouController,
-                maxLines: 8,
-                minLines: 6,
-                maxLength: 500,
-                decoration: const InputDecoration(
-                  hintText:
-                      'e.g. I am a cheerful person who loves travelling and cooking. I am looking for a caring and understanding partner...',
-                  hintStyle: TextStyle(
-                    color: AppColors.textLight,
-                    fontSize: 14,
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(16),
-                ),
+            const Text(
+              "Religious preferences help's to find the best companion",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A4B),
               ),
             ),
+            const SizedBox(height: 24),
 
-            const SizedBox(height: 32),
-            buildNextButton(controller.isLoading, controller.submitStep6),
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Caste',
+                value: controller.partnerCaste.value,
+                options: ['Any', 'Kongu Vellalar'],
+                onChanged: (v) => controller.partnerCaste.value = v!,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            buildStepTextField(
+              controller: TextEditingController(
+                text: controller.partnerKootam.value == 'Any'
+                    ? ''
+                    : controller.partnerKootam.value,
+              ),
+              label: 'Partner Kulam',
+              hint: 'e.g. Porulanthai',
+              icon: Icons.group_outlined,
+            ),
+            const SizedBox(height: 14),
+
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Star',
+                value: controller.partnerStar.value,
+                options: controller.starOptions,
+                onChanged: (v) => controller.partnerStar.value = v!,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Rasi',
+                value: controller.partnerRasi.value,
+                options: controller.rasiOptions,
+                onChanged: (v) => controller.partnerRasi.value = v!,
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            Obx(
+              () => buildChipSelector(
+                label: 'Partner Dosham',
+                selectedValue: controller.partnerDosham.value,
+                options: ['No', 'Yes', 'Any'],
+                onSelected: (v) => controller.partnerDosham.value = v,
+                isRequired: true,
+              ),
+            ),
+
+            const SizedBox(height: 40),
+            buildNextButton(
+              controller.isLoading,
+              controller.submitStep6,
+              label: 'Continue',
+            ),
             const SizedBox(height: 20),
           ],
         ),

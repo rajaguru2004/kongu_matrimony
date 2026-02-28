@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
@@ -7,89 +9,139 @@ import 'package:kongu_matrimony/app/routes/app_pages.dart';
 class Step2Controller extends GetxController {
   late RegisterModel registerModel;
 
-  final RxString maritalStatus = 'Unmarried'.obs;
-  final RxString height = ''.obs;
-  final RxString familyStatus = 'Middle Class'.obs;
-  final RxString familyType = 'Nuclear Family'.obs;
-  final RxString familyValues = 'Traditional'.obs;
-  final RxString anyDisability = 'No'.obs;
+  final kootamController = TextEditingController();
+  final RxString caste = ''.obs;
+  final RxString rasi = ''.obs;
+  final RxString star = ''.obs;
+  final RxString dosham = ''.obs;
+  final RxString horoscopeFileUrl = ''.obs;
+  final RxString horoscopeFilePath = ''.obs;
   final RxBool isLoading = false.obs;
 
   final _api = ApiService();
+  final _picker = ImagePicker();
 
-  final List<String> maritalStatusOptions = [
-    'Unmarried',
-    'Divorced',
-    'Widowed',
-    'Awaiting Divorce',
+  final List<String> casteOptions = [
+    'Kongu Vellalar Gounder',
+    'Vettuva Gounder',
+    'Nattu Gounder',
   ];
 
-  final List<String> heightOptions = [
-    '4 ft 6 in',
-    '4 ft 7 in',
-    '4 ft 8 in',
-    '4 ft 9 in',
-    '4 ft 10 in',
-    '4 ft 11 in',
-    '5 ft 0 in',
-    '5 ft 1 in',
-    '5 ft 2 in',
-    '5 ft 3 in',
-    '5 ft 4 in',
-    '5 ft 5 in',
-    '5 ft 6 in',
-    '5 ft 7 in',
-    '5 ft 8 in',
-    '5 ft 9 in',
-    '5 ft 10 in',
-    '5 ft 11 in',
-    '6 ft 0 in',
-    '6 ft 1 in',
-    '6 ft 2 in',
-    '6 ft 3 in',
+  final List<String> rasiOptions = [
+    'Mesham (Aries)',
+    'Rishapam (Taurus)',
+    'Mithunam (Gemini)',
+    'Kadagam (Cancer)',
+    'Simmam (Leo)',
+    'Kanni (Virgo)',
+    'Thulam (Libra)',
+    'Viruchigam (Scorpio)',
+    'Dhanusu (Sagittarius)',
+    'Magaram (Capricorn)',
+    'Kumbam (Aquarius)',
+    'Meenam (Pisces)',
   ];
 
-  final List<String> familyStatusOptions = [
-    'Lower Class',
-    'Lower Middle Class',
-    'Middle Class',
-    'Upper Middle Class',
-    'Rich',
-    'Affluent',
+  final List<String> starOptions = [
+    'Ashwini',
+    'Bharani',
+    'Karthigai',
+    'Rohini',
+    'Mrigashirsha',
+    'Arudra',
+    'Punarvasu',
+    'Pushya',
+    'Ashlesha',
+    'Magha',
+    'Purva Phalguni',
+    'Uttara Phalguni',
+    'Hasta',
+    'Chitra',
+    'Swati',
+    'Vishakha',
+    'Anuradha',
+    'Jyeshtha',
+    'Mula',
+    'Purva Ashadha',
+    'Uttara Ashadha',
+    'Shravana',
+    'Dhanishta',
+    'Shatabhisha',
+    'Purva Bhadrapada',
+    'Uttara Bhadrapada',
+    'Revati',
   ];
 
-  final List<String> familyTypeOptions = [
-    'Nuclear Family',
-    'Joint Family',
-    'Extended Family',
+  final List<String> doshamOptions = [
+    'None',
+    'Sevvai Dosham',
+    'Sarpa Dosham (Ragu/Kethu)',
+    'Kala Sarpa Dosham',
   ];
-
-  final List<String> familyValuesOptions = [
-    'Traditional',
-    'Moderate',
-    'Liberal',
-  ];
-
-  final List<String> disabilityOptions = ['No', 'Yes'];
 
   @override
   void onInit() {
     super.onInit();
     registerModel = Get.arguments as RegisterModel;
-    height.value = heightOptions[12]; // default 5 ft 6 in
+  }
+
+  @override
+  void onClose() {
+    kootamController.dispose();
+    super.onClose();
+  }
+
+  Future<void> pickHoroscope() async {
+    final file = await _picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      horoscopeFilePath.value = file.path;
+    }
   }
 
   Future<void> submitStep2() async {
+    if (rasi.value.isEmpty) {
+      Get.snackbar('Validation', 'Please select your Rasi');
+      return;
+    }
+    if (star.value.isEmpty) {
+      Get.snackbar('Validation', 'Please select your Star');
+      return;
+    }
+
     isLoading.value = true;
+
+    String? uploadedUrl;
+    if (horoscopeFilePath.value.isNotEmpty) {
+      final response = await _api.uploadImage(
+        filePath: horoscopeFilePath.value,
+        pathName: 'horoscopes',
+        id: registerModel.registerId,
+        tag: 'image_upload',
+      );
+      if (response != null && response['success'] == true) {
+        uploadedUrl = response['data'];
+      }
+    }
+
     final response = await _api
-        .post(Endpoints.step2(registerModel.registerId), {
-          'maritalStatus': maritalStatus.value,
-          'height': height.value,
-          'familyStatus': familyStatus.value,
-          'familyType': familyType.value,
-          'familyValues': familyValues.value,
-          'anyDisability': anyDisability.value,
-        });
+        .post(Endpoints.yourCaste(registerModel.registerId), {
+          'yourCaste': caste.value,
+          'yourKootam': kootamController.text.trim(),
+          'yourRasi': rasi.value
+              .toLowerCase()
+              .replaceAll(' ', '-')
+              .replaceAll('(', '')
+              .replaceAll(')', ''),
+          'yourStar': star.value.toLowerCase(),
+          'yourDosham': dosham.value
+              .toLowerCase()
+              .replaceAll(' ', '-')
+              .replaceAll('(', '')
+              .replaceAll(')', ''),
+          'yourHoroscopeType': '',
+          'yourHoroscopeFileUrl': uploadedUrl ?? '',
+        }, tag: 'signup_flow');
+
     isLoading.value = false;
 
     if (response != null && response['success'] == true) {
