@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step4_controller.dart';
 
@@ -37,7 +38,7 @@ class Step4View extends GetView<Step4Controller> {
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        const CommonText(
                           'Age Range',
                           style: TextStyle(
                             fontSize: 13,
@@ -54,7 +55,7 @@ class Step4View extends GetView<Step4Controller> {
                             color: AppColors.primaryLight,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Text(
+                          child: CommonText(
                             '${controller.partnerMinAge.value} - ${controller.partnerMaxAge.value} yrs',
                             style: const TextStyle(
                               color: AppColors.primary,

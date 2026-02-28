@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -9,12 +10,9 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
+      appBar: AppBar(title: const CommonText('HomeView'), centerTitle: true),
+      body: Center(
+        child: CommonText(
           'HomeView is working',
           style: TextStyle(fontSize: 20),
         ),

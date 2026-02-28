@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import '../controllers/initial_sign_controller.dart';
 
 class InitialSignView extends GetView<InitialSignController> {
@@ -8,10 +9,14 @@ class InitialSignView extends GetView<InitialSignController> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isSmallScreen = screenHeight < 700;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
               // Header
@@ -28,12 +33,17 @@ class InitialSignView extends GetView<InitialSignController> {
                     bottomRight: Radius.circular(32),
                   ),
                 ),
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 40),
+                padding: EdgeInsets.fromLTRB(
+                  24,
+                  isSmallScreen ? 24 : 32,
+                  24,
+                  isSmallScreen ? 32 : 40,
+                ),
                 child: Column(
                   children: [
                     Container(
-                      width: 72,
-                      height: 72,
+                      width: isSmallScreen ? 60 : 72,
+                      height: isSmallScreen ? 60 : 72,
                       decoration: BoxDecoration(
                         color: AppColors.white,
                         shape: BoxShape.circle,
@@ -45,53 +55,59 @@ class InitialSignView extends GetView<InitialSignController> {
                           ),
                         ],
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.favorite,
                         color: AppColors.primary,
-                        size: 36,
+                        size: isSmallScreen ? 30 : 36,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
+                    SizedBox(height: isSmallScreen ? 12 : 16),
+                    CommonText(
                       'Kongu Matrimony',
                       style: TextStyle(
                         color: AppColors.white,
-                        fontSize: 24,
+                        fontSize: isSmallScreen ? 20 : 24,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
+                    CommonText(
                       'Find your perfect life partner',
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: isSmallScreen ? 12 : 14,
+                      ),
                     ),
                   ],
                 ),
               ),
 
               Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(isSmallScreen ? 16 : 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    CommonText(
                       'Create Profile',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: isSmallScreen ? 18 : 22,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textDark,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    CommonText(
                       'Tell us about yourself to get started',
-                      style: TextStyle(fontSize: 14, color: AppColors.textGrey),
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 12 : 14,
+                        color: AppColors.textGrey,
+                      ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: isSmallScreen ? 16 : 24),
 
                     // Profile For
-                    const Text(
+                    const CommonText(
                       'Profile For',
                       style: TextStyle(
                         fontSize: 14,
@@ -112,9 +128,9 @@ class InitialSignView extends GetView<InitialSignController> {
                                 controller.profileFor.value = opt['value']!,
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 10,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isSmallScreen ? 12 : 16,
+                                vertical: isSmallScreen ? 8 : 10,
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
@@ -139,14 +155,14 @@ class InitialSignView extends GetView<InitialSignController> {
                                       ]
                                     : [],
                               ),
-                              child: Text(
+                              child: CommonText(
                                 opt['label']!,
                                 style: TextStyle(
                                   color: isSelected
                                       ? AppColors.white
                                       : AppColors.textDark,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13,
+                                  fontSize: isSmallScreen ? 12 : 13,
                                 ),
                               ),
                             ),
@@ -155,7 +171,7 @@ class InitialSignView extends GetView<InitialSignController> {
                       ),
                     ),
 
-                    const SizedBox(height: 20),
+                    SizedBox(height: isSmallScreen ? 12 : 20),
 
                     // Name field
                     _buildTextField(
@@ -163,8 +179,9 @@ class InitialSignView extends GetView<InitialSignController> {
                       label: 'Full Name',
                       hint: 'Enter your full name',
                       icon: Icons.person_outline,
+                      isSmallScreen: isSmallScreen,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: isSmallScreen ? 12 : 16),
 
                     // Phone field
                     _buildTextField(
@@ -174,11 +191,12 @@ class InitialSignView extends GetView<InitialSignController> {
                       icon: Icons.phone_outlined,
                       keyboardType: TextInputType.phone,
                       maxLength: 10,
+                      isSmallScreen: isSmallScreen,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: isSmallScreen ? 12 : 20),
 
                     // Gender
-                    const Text(
+                    const CommonText(
                       'Gender',
                       style: TextStyle(
                         fontSize: 14,
@@ -196,6 +214,7 @@ class InitialSignView extends GetView<InitialSignController> {
                             value: 'male',
                             selected: controller.gender.value == 'male',
                             onTap: () => controller.gender.value = 'male',
+                            isSmallScreen: isSmallScreen,
                           ),
                           const SizedBox(width: 12),
                           _buildGenderChip(
@@ -204,18 +223,19 @@ class InitialSignView extends GetView<InitialSignController> {
                             value: 'female',
                             selected: controller.gender.value == 'female',
                             onTap: () => controller.gender.value = 'female',
+                            isSmallScreen: isSmallScreen,
                           ),
                         ],
                       ),
                     ),
 
-                    const SizedBox(height: 32),
+                    SizedBox(height: isSmallScreen ? 20 : 32),
 
                     // Next Button
                     Obx(
                       () => SizedBox(
                         width: double.infinity,
-                        height: 52,
+                        height: isSmallScreen ? 48 : 52,
                         child: ElevatedButton(
                           onPressed: controller.isLoading.value
                               ? null
@@ -240,10 +260,10 @@ class InitialSignView extends GetView<InitialSignController> {
                                     strokeWidth: 2.5,
                                   ),
                                 )
-                              : const Text(
+                              : CommonText(
                                   'Next',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: isSmallScreen ? 15 : 16,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
                                   ),
@@ -252,15 +272,16 @@ class InitialSignView extends GetView<InitialSignController> {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                    SizedBox(height: isSmallScreen ? 8 : 16),
                     Center(
                       child: TextButton(
                         onPressed: () => Get.back(),
-                        child: const Text(
+                        child: CommonText(
                           'Already registered? Login',
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w500,
+                            fontSize: isSmallScreen ? 13 : 14,
                           ),
                         ),
                       ),
@@ -282,27 +303,36 @@ class InitialSignView extends GetView<InitialSignController> {
     required IconData icon,
     TextInputType keyboardType = TextInputType.text,
     int? maxLength,
+    bool isSmallScreen = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CommonText(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: isSmallScreen ? 13 : 14,
             fontWeight: FontWeight.w600,
             color: AppColors.textDark,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: isSmallScreen ? 6 : 8),
         TextField(
           controller: controller,
           keyboardType: keyboardType,
           maxLength: maxLength,
+          style: TextStyle(fontSize: isSmallScreen ? 14 : 15),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(color: AppColors.textLight),
-            prefixIcon: Icon(icon, color: AppColors.primary, size: 20),
+            hintStyle: TextStyle(
+              color: AppColors.textLight,
+              fontSize: isSmallScreen ? 13 : 14,
+            ),
+            prefixIcon: Icon(
+              icon,
+              color: AppColors.primary,
+              size: isSmallScreen ? 18 : 20,
+            ),
             filled: true,
             fillColor: AppColors.white,
             counterText: '',
@@ -321,9 +351,9 @@ class InitialSignView extends GetView<InitialSignController> {
                 width: 1.5,
               ),
             ),
-            contentPadding: const EdgeInsets.symmetric(
+            contentPadding: EdgeInsets.symmetric(
               horizontal: 16,
-              vertical: 14,
+              vertical: isSmallScreen ? 12 : 14,
             ),
           ),
         ),
@@ -337,13 +367,14 @@ class InitialSignView extends GetView<InitialSignController> {
     required String value,
     required bool selected,
     required VoidCallback onTap,
+    bool isSmallScreen = false,
   }) {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 14),
+          padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 10 : 14),
           decoration: BoxDecoration(
             color: selected ? AppColors.primary : AppColors.white,
             borderRadius: BorderRadius.circular(12),
@@ -358,14 +389,15 @@ class InitialSignView extends GetView<InitialSignController> {
               Icon(
                 icon,
                 color: selected ? AppColors.white : AppColors.textGrey,
-                size: 20,
+                size: isSmallScreen ? 18 : 20,
               ),
-              const SizedBox(width: 6),
-              Text(
+              SizedBox(width: isSmallScreen ? 4 : 6),
+              CommonText(
                 label,
                 style: TextStyle(
                   color: selected ? AppColors.white : AppColors.textDark,
                   fontWeight: FontWeight.w600,
+                  fontSize: isSmallScreen ? 13 : 14,
                 ),
               ),
             ],

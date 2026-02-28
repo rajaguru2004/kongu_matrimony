@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step7_controller.dart';
 
@@ -25,7 +26,7 @@ class Step7View extends GetView<Step7Controller> {
             Center(
               child: Column(
                 children: [
-                  const Text(
+                  CommonText(
                     'Upload Profile Photo',
                     style: TextStyle(
                       fontSize: 20,
@@ -34,7 +35,7 @@ class Step7View extends GetView<Step7Controller> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  const CommonText(
                     'A clear photo helps you get more responses',
                     style: TextStyle(fontSize: 13, color: AppColors.textGrey),
                   ),
@@ -122,7 +123,7 @@ class Step7View extends GetView<Step7Controller> {
                                   size: 16,
                                 ),
                                 SizedBox(width: 6),
-                                Text(
+                                CommonText(
                                   'Photo selected',
                                   style: TextStyle(
                                     color: AppColors.success,
@@ -138,7 +139,7 @@ class Step7View extends GetView<Step7Controller> {
                               Icons.photo_library_outlined,
                               color: AppColors.primary,
                             ),
-                            label: const Text(
+                            label: const CommonText(
                               'Choose from Gallery',
                               style: TextStyle(
                                 color: AppColors.primary,
@@ -160,7 +161,7 @@ class Step7View extends GetView<Step7Controller> {
                   Routes.STEP8,
                   arguments: controller.registerModel,
                 ),
-                child: const Text(
+                child: const CommonText(
                   'Skip for now',
                   style: TextStyle(color: AppColors.textGrey),
                 ),

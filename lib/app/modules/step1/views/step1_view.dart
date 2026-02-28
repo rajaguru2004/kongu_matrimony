@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step1_controller.dart';
 
@@ -71,7 +72,7 @@ class Step1View extends GetView<Step1Controller> {
             const SizedBox(height: 24),
             buildSectionTitle('Identity Documents'),
             const SizedBox(height: 4),
-            const Text(
+            CommonText(
               'Upload your identity proof (Aadhaar / PAN / Passport)',
               style: TextStyle(fontSize: 12, color: AppColors.textGrey),
             ),
@@ -173,7 +174,7 @@ class Step1View extends GetView<Step1Controller> {
                     size: 28,
                   ),
                   const SizedBox(height: 6),
-                  Text(
+                  CommonText(
                     label,
                     textAlign: TextAlign.center,
                     style: const TextStyle(

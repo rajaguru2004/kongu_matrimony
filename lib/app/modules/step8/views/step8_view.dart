@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step8_controller.dart';
 
@@ -96,12 +97,12 @@ class Step8View extends GetView<Step8Controller> {
                             strokeWidth: 2.5,
                           ),
                         )
-                      : const Row(
+                      : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.check_circle_outline, size: 20),
                             SizedBox(width: 8),
-                            Text(
+                            CommonText(
                               'Complete Registration',
                               style: TextStyle(
                                 fontSize: 16,

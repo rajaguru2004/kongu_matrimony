@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 
 AppBar buildStepAppBar(String title, int step) {
   return AppBar(
     backgroundColor: AppColors.white,
     elevation: 0,
     leading: IconButton(
-      icon: const Icon(
-        Icons.arrow_back_ios_new,
-        color: AppColors.textDark,
-        size: 20,
-      ),
+      icon: Icon(Icons.arrow_back_ios_new, color: AppColors.textDark, size: 20),
       onPressed: () => Get.back(),
     ),
-    title: Text(
+    title: CommonText(
       title,
       style: const TextStyle(
         color: AppColors.textDark,
@@ -44,7 +41,7 @@ Widget buildStepIndicator(int current, int total) {
           color: AppColors.primaryLight,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(
+        child: CommonText(
           'Step $current of $total',
           style: const TextStyle(
             color: AppColors.primary,
@@ -58,7 +55,7 @@ Widget buildStepIndicator(int current, int total) {
 }
 
 Widget buildSectionTitle(String title) {
-  return Text(
+  return CommonText(
     title,
     style: const TextStyle(
       fontSize: 15,
@@ -79,7 +76,7 @@ Widget buildStepTextField({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
+      CommonText(
         label,
         style: const TextStyle(
           fontSize: 13,
@@ -132,7 +129,7 @@ Widget buildPickerTile({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
+      CommonText(
         label,
         style: const TextStyle(
           fontSize: 13,
@@ -161,7 +158,7 @@ Widget buildPickerTile({
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
+                child: CommonText(
                   value,
                   style: TextStyle(
                     color: hasValue ? AppColors.textDark : AppColors.textLight,
@@ -187,7 +184,7 @@ Widget buildStepDropdown({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
+      CommonText(
         label,
         style: const TextStyle(
           fontSize: 13,
@@ -213,7 +210,9 @@ Widget buildStepDropdown({
             ),
             style: const TextStyle(color: AppColors.textDark, fontSize: 14),
             items: options
-                .map((opt) => DropdownMenuItem(value: opt, child: Text(opt)))
+                .map(
+                  (opt) => DropdownMenuItem(value: opt, child: CommonText(opt)),
+                )
                 .toList(),
             onChanged: onChanged,
           ),
@@ -253,7 +252,7 @@ Widget buildNextButton(
                   strokeWidth: 2.5,
                 ),
               )
-            : Text(
+            : CommonText(
                 label,
                 style: const TextStyle(
                   fontSize: 16,

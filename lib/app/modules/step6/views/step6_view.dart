@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
+import 'package:kongu_matrimony/app/utils/common_text.dart';
 import 'package:kongu_matrimony/app/utils/step_widgets.dart';
 import '../controllers/step6_controller.dart';
 
@@ -22,7 +23,7 @@ class Step6View extends GetView<Step6Controller> {
 
             buildSectionTitle('Tell us about yourself'),
             const SizedBox(height: 6),
-            const Text(
+            CommonText(
               'Write a brief description about your personality, hobbies, and what you are looking for in a partner.',
               style: TextStyle(fontSize: 13, color: AppColors.textGrey),
             ),
