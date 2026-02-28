@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
+import 'package:kongu_matrimony/app/routes/app_pages.dart';
 import '../controllers/initial_sign_controller.dart';
 
 class InitialSignView extends GetView<InitialSignController> {
@@ -275,7 +276,7 @@ class InitialSignView extends GetView<InitialSignController> {
                     SizedBox(height: isSmallScreen ? 8 : 16),
                     Center(
                       child: TextButton(
-                        onPressed: () => Get.back(),
+                        onPressed: () => Get.toNamed(Routes.LOGIN),
                         child: CommonText(
                           'Already registered? Login',
                           style: TextStyle(

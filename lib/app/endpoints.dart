@@ -24,4 +24,11 @@ class Endpoints {
   static String step6(String registerId) => "$registerBase/$registerId/step-6";
 
   static String step7(String registerId) => "$registerBase/$registerId/step-7";
+  // Login
+  static const String loginBase = "$baseUrl/website/auth/login";
+  static const String loginSendOtp = "$loginBase/send";
+  static const String loginVerifyOtp = "$loginBase/verify";
+
+  // Home
+  static const String matches = "$baseUrl/website/matches";
 }

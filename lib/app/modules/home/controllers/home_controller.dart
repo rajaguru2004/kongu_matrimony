@@ -1,23 +1,30 @@
 import 'package:get/get.dart';
+import 'package:kongu_matrimony/app/data/models/user_model.dart';
+import 'package:kongu_matrimony/app/data/services/api_service.dart';
+import 'package:kongu_matrimony/app/data/services/auth_service.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final _api = ApiService();
+  final _auth = AuthService.to;
 
-  final count = 0.obs;
+  final RxList<UserModel> matches = <UserModel>[].obs;
+  final RxBool isLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
+    fetchMatches();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<void> fetchMatches() async {
+    if (!_auth.isAuthenticated) return;
 
-  @override
-  void onClose() {
-    super.onClose();
+    isLoading.value = true;
+    final result = await _api.getMatches(
+      registerId: _auth.registerId,
+      token: _auth.token,
+    );
+    matches.assignAll(result);
+    isLoading.value = false;
   }
-
-  void increment() => count.value++;
 }
