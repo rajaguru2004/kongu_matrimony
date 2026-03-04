@@ -1,5 +1,6 @@
 class Endpoints {
-  static const String baseUrl = "https://api.konguelitematrimony.co.in";
+  // static const String baseUrl = "https://api.konguelitematrimony.co.in";
+  static const String baseUrl = "https://api.uat.konguelitematrimony.co.in";
   static const String uploadImage = "$baseUrl/website/image/upload";
 
   // Registration

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
+import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
@@ -24,6 +25,81 @@ class MatchesController extends GetxController {
 
   // View Mode (Grid vs Swipe)
   final RxBool isSwipeMode = false.obs;
+
+  // Filters
+  final Rx<FilterModel?> activeFilter = Rx<FilterModel?>(null);
+
+  // Filter Options
+  final List<String> ageOptions = List.generate(
+    43,
+    (index) => (index + 18).toString(),
+  );
+  final List<String> incomeOptions = [
+    'Any Income',
+    'Below 2 Lakhs',
+    '2 - 5 Lakhs',
+    '5 - 10 Lakhs',
+    '10 - 20 Lakhs',
+    'Above 20 Lakhs',
+  ];
+  final List<String> educationOptions = [
+    'Any Education',
+    'B.E / B.Tech',
+    'M.E / M.Tech',
+    'M.B.A',
+    'M.C.A',
+    'B.Sc',
+    'M.Sc',
+    'B.Com',
+    'M.Com',
+    'B.A',
+    'M.A',
+    'B.B.A',
+    'B.C.A',
+    'MBBS',
+    'BDS',
+    'Diploma',
+    'ITI',
+    '12th',
+    '10th',
+  ];
+  final List<String> jobOptions = [
+    'Any Job',
+    'Software Engineer',
+    'Teacher/Professor',
+    'Doctor',
+    'Engineer',
+    'Manager',
+    'Banker',
+    'Police/Military',
+    'Farmer',
+    'Business Person',
+    'Other',
+  ];
+  final List<String> doshamOptions = [
+    'Any Dosham',
+    'None',
+    'Sevvai Dosham',
+    'Sarpa Dosham (Ragu/Kethu)',
+    'Kala Sarpa Dosham',
+  ];
+  final List<String> maritalStatusOptions = [
+    'Any Status',
+    'Unmarried',
+    'Divorced',
+    'Widowed',
+    'Awaiting Divorce',
+  ];
+  final List<String> countryOptions = [
+    'Select Countries',
+    'India',
+    'USA',
+    'UK',
+    'Canada',
+    'Australia',
+    'Singapore',
+    'UAE',
+  ];
 
   // Card Swiper
   final CardSwiperController swiperController = CardSwiperController();
@@ -100,6 +176,7 @@ class MatchesController extends GetxController {
         token: _auth.token,
         page: pageToFetch,
         limit: limit,
+        filter: activeFilter.value,
       );
     } else if (type == 'yours') {
       result = await _api.getYourMatches(
@@ -107,6 +184,7 @@ class MatchesController extends GetxController {
         token: _auth.token,
         page: pageToFetch,
         limit: limit,
+        filter: activeFilter.value,
       );
     } else if (type == 'recent') {
       result = await _api.getRecentlyJoined(
@@ -114,6 +192,7 @@ class MatchesController extends GetxController {
         token: _auth.token,
         page: pageToFetch,
         limit: limit,
+        filter: activeFilter.value,
       );
     } else {
       result = await _api.getMatches(
@@ -121,6 +200,7 @@ class MatchesController extends GetxController {
         token: _auth.token,
         page: pageToFetch,
         limit: limit,
+        filter: activeFilter.value,
       );
     }
 
@@ -146,6 +226,18 @@ class MatchesController extends GetxController {
 
     isLoading.value = false;
     isMoreLoading.value = false;
+  }
+
+  void applyFilters(FilterModel filter) {
+    activeFilter.value = filter;
+    fetchProfiles();
+    Get.back();
+  }
+
+  void resetFilters() {
+    activeFilter.value = null;
+    fetchProfiles();
+    Get.back();
   }
 
   bool onSwipe(

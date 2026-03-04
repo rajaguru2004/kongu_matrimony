@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/data/models/interest_model.dart';
 import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
@@ -107,17 +108,24 @@ class ApiService {
     required String token,
     int page = 1,
     int limit = 8,
+    FilterModel? filter,
   }) async {
+    final Map<String, dynamic> queryParams = {
+      'page': page,
+      'limit': limit,
+      'search': '',
+      'sortOrder': 'DESC',
+      'sortBy': 'createdAt',
+      'id': registerId,
+    };
+
+    if (filter != null) {
+      queryParams.addAll(filter.toJson());
+    }
+
     final response = await get(
       Endpoints.matches,
-      queryParameters: {
-        'page': page,
-        'limit': limit,
-        'search': '',
-        'sortOrder': 'DESC',
-        'sortBy': 'createdAt',
-        'id': registerId,
-      },
+      queryParameters: queryParams,
       token: token,
       tag: 'fetch_matches',
     );
@@ -134,16 +142,23 @@ class ApiService {
     String? token,
     int page = 1,
     int limit = 8,
+    FilterModel? filter,
   }) async {
+    final Map<String, dynamic> queryParams = {
+      'page': page,
+      'limit': limit,
+      'sortOrder': 'DESC',
+      'sortBy': 'createdAt',
+      'id': registerId,
+    };
+
+    if (filter != null) {
+      queryParams.addAll(filter.toJson());
+    }
+
     final response = await get(
       Endpoints.matches,
-      queryParameters: {
-        'page': page,
-        'limit': limit,
-        'sortOrder': 'DESC',
-        'sortBy': 'createdAt',
-        'id': registerId,
-      },
+      queryParameters: queryParams,
       token: token,
       tag: 'daily_recommendations',
     );
@@ -160,10 +175,21 @@ class ApiService {
     String? token,
     int page = 1,
     int limit = 8,
+    FilterModel? filter,
   }) async {
+    final Map<String, dynamic> queryParams = {
+      'page': page,
+      'limit': limit,
+      'id': registerId,
+    };
+
+    if (filter != null) {
+      queryParams.addAll(filter.toJson());
+    }
+
     final response = await get(
       Endpoints.matches,
-      queryParameters: {'page': page, 'limit': limit, 'id': registerId},
+      queryParameters: queryParams,
       token: token,
       tag: 'your_matches',
     );
@@ -180,22 +206,29 @@ class ApiService {
     String? token,
     int page = 1,
     int limit = 8,
+    FilterModel? filter,
   }) async {
     final now = DateTime.now();
     final cutoff = now.subtract(const Duration(days: 7));
     final dateStr =
         '${cutoff.year}-${cutoff.month.toString().padLeft(2, '0')}-${cutoff.day.toString().padLeft(2, '0')}';
 
+    final Map<String, dynamic> queryParams = {
+      'page': page,
+      'limit': limit,
+      'createdDate': dateStr,
+      'sortOrder': 'DESC',
+      'sortBy': 'createdAt',
+      'id': registerId,
+    };
+
+    if (filter != null) {
+      queryParams.addAll(filter.toJson());
+    }
+
     final response = await get(
       Endpoints.matches,
-      queryParameters: {
-        'page': page,
-        'limit': limit,
-        'createdDate': dateStr,
-        'sortOrder': 'DESC',
-        'sortBy': 'createdAt',
-        'id': registerId,
-      },
+      queryParameters: queryParams,
       token: token,
       tag: 'recently_joined',
     );

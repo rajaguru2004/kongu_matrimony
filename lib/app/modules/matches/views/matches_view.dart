@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
+import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 import '../controllers/matches_controller.dart';
@@ -45,6 +46,10 @@ class MatchesView extends GetView<MatchesController> {
           ),
         ),
         actions: [
+          IconButton(
+            onPressed: () => _showFilterBottomSheet(context),
+            icon: const Icon(Icons.tune_rounded, color: Colors.white),
+          ),
           IconButton(
             onPressed: () => controller.toggleView(),
             icon: Obx(
@@ -187,6 +192,269 @@ class MatchesView extends GetView<MatchesController> {
             size: 70,
           ),
         ],
+      ),
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    final minAge = RxInt(controller.activeFilter.value?.minAge ?? 18);
+    final maxAge = RxInt(controller.activeFilter.value?.maxAge ?? 60);
+    final annualIncome = RxString(
+      controller.activeFilter.value?.annualIncome ?? 'Any Income',
+    );
+    final familyIncome = RxString(
+      controller.activeFilter.value?.familyIncome ?? 'Any Income',
+    );
+    final education = RxString(
+      controller.activeFilter.value?.education ?? 'Any Education',
+    );
+    final job = RxString(controller.activeFilter.value?.job ?? 'Any Job');
+    final dosham = RxString(
+      controller.activeFilter.value?.dosham ?? 'Any Dosham',
+    );
+    final maritalStatus = RxString(
+      controller.activeFilter.value?.maritalStatus ?? 'Any Status',
+    );
+    final country = RxString(
+      controller.activeFilter.value?.country ?? 'Select Countries',
+    );
+
+    Get.bottomSheet(
+      Container(
+        height: Get.height * 0.7,
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CommonText(
+                    'Filters',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () => controller.resetFilters(),
+                    child: const CommonText(
+                      'Reset All',
+                      style: TextStyle(color: _kPrimary, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Age Range
+              _buildFilterLabel(Icons.star_border_rounded, 'AGE RANGE'),
+              Row(
+                children: [
+                  Expanded(
+                    child: Obx(
+                      () => _buildDropdown(
+                        value: minAge.value.toString(),
+                        items: controller.ageOptions,
+                        onChanged: (v) => minAge.value = int.parse(v!),
+                        hint: 'Min',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Obx(
+                      () => _buildDropdown(
+                        value: maxAge.value.toString(),
+                        items: controller.ageOptions,
+                        onChanged: (v) => maxAge.value = int.parse(v!),
+                        hint: 'Max',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Annual Income
+              _buildFilterLabel(
+                Icons.account_balance_wallet_outlined,
+                'ANNUAL INCOME',
+              ),
+              Obx(
+                () => _buildDropdown(
+                  value: annualIncome.value,
+                  items: controller.incomeOptions,
+                  onChanged: (v) => annualIncome.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Education
+              _buildFilterLabel(Icons.school_outlined, 'EDUCATION'),
+              Obx(
+                () => _buildDropdown(
+                  value: education.value,
+                  items: controller.educationOptions,
+                  onChanged: (v) => education.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Family Income
+              _buildFilterLabel(Icons.currency_rupee_rounded, 'FAMILY INCOME'),
+              Obx(
+                () => _buildDropdown(
+                  value: familyIncome.value,
+                  items: controller.incomeOptions,
+                  onChanged: (v) => familyIncome.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Job
+              _buildFilterLabel(Icons.card_travel_rounded, 'JOB'),
+              Obx(
+                () => _buildDropdown(
+                  value: job.value,
+                  items: controller.jobOptions,
+                  onChanged: (v) => job.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Dosham
+              _buildFilterLabel(Icons.verified_user_outlined, 'DOSHAM'),
+              Obx(
+                () => _buildDropdown(
+                  value: dosham.value,
+                  items: controller.doshamOptions,
+                  onChanged: (v) => dosham.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Marital Status
+              _buildFilterLabel(
+                Icons.person_add_alt_1_outlined,
+                'MARITAL STATUS',
+              ),
+              Obx(
+                () => _buildDropdown(
+                  value: maritalStatus.value,
+                  items: controller.maritalStatusOptions,
+                  onChanged: (v) => maritalStatus.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Job Location Country
+              _buildFilterLabel(
+                Icons.location_on_outlined,
+                'JOB LOCATION COUNTRY',
+              ),
+              Obx(
+                () => _buildDropdown(
+                  value: country.value,
+                  items: controller.countryOptions,
+                  onChanged: (v) => country.value = v!,
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              ElevatedButton(
+                onPressed: () {
+                  final filter = FilterModel(
+                    minAge: minAge.value,
+                    maxAge: maxAge.value,
+                    annualIncome: annualIncome.value,
+                    familyIncome: familyIncome.value,
+                    education: education.value,
+                    job: job.value,
+                    dosham: dosham.value,
+                    maritalStatus: maritalStatus.value,
+                    country: country.value,
+                  );
+                  controller.applyFilters(filter);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _kPrimary,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 56),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const CommonText(
+                  'Apply Filters',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+    );
+  }
+
+  Widget _buildFilterLabel(IconData icon, String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: _kAccent),
+          const SizedBox(width: 8),
+          CommonText(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: _kTextSecondary,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropdown({
+    required String value,
+    required List<String> items,
+    required ValueChanged<String?> onChanged,
+    String? hint,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: items.contains(value) ? value : items.first,
+          isExpanded: true,
+          hint: hint != null ? CommonText(hint) : null,
+          items: items
+              .map(
+                (e) => DropdownMenuItem(
+                  value: e,
+                  child: CommonText(
+                    e,
+                    style: const TextStyle(color: _kTextPrimary),
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: onChanged,
+        ),
       ),
     );
   }
