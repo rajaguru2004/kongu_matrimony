@@ -5,15 +5,19 @@ import 'package:kongu_matrimony/app/data/services/auth_service.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(AuthService());
+  final authService = Get.put(AuthService());
+  await authService.loadAuthData(); // Wait for stored token to load
+
   runApp(
     GetMaterialApp(
       title: "Application",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
-      initialRoute: AppPages.INITIAL,
+      initialRoute: authService.isAuthenticated
+          ? Routes.MAIN
+          : AppPages.INITIAL,
       getPages: AppPages.routes,
     ),
   );

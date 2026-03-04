@@ -63,11 +63,11 @@ class LoginController extends GetxController {
     if (response != null) {
       final loginResponse = LoginResponseModel.fromJson(response);
       if (loginResponse.success && loginResponse.user != null) {
-        AuthService.to.login(
+        await AuthService.to.login(
           loginResponse.token ?? '',
           loginResponse.user?.registerId ?? '',
         );
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.MAIN);
       } else {
         Get.snackbar('Error', loginResponse.message);
       }

@@ -54,7 +54,7 @@ class Step8Controller extends GetxController {
     isLoading.value = false;
 
     if (response != null && response['success'] == true) {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.MAIN);
     }
   }
 }

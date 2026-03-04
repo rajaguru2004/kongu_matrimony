@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
-import 'package:kongu_matrimony/app/data/models/user_model.dart';
+import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
 
 class ApiService {
@@ -101,7 +101,7 @@ class ApiService {
     }
   }
 
-  Future<List<UserModel>> getMatches({
+  Future<MatchesResponseModel?> getMatches({
     required String registerId,
     required String token,
     int page = 1,
@@ -121,11 +121,88 @@ class ApiService {
       tag: 'fetch_matches',
     );
 
-    if (response != null && response['success'] == true) {
-      final List<dynamic> data = response['data'] ?? [];
-      return data.map((json) => UserModel.fromJson(json)).toList();
+    if (response != null) {
+      return MatchesResponseModel.fromJson(response);
     }
-    return [];
+    return null;
+  }
+
+  /// Daily Recommendations — sorted DESC by createdAt
+  Future<MatchesResponseModel?> getDailyRecommendations({
+    required String registerId,
+    String? token,
+    int page = 1,
+    int limit = 8,
+  }) async {
+    final response = await get(
+      Endpoints.matches,
+      queryParameters: {
+        'page': page,
+        'limit': limit,
+        'sortOrder': 'DESC',
+        'sortBy': 'createdAt',
+        'id': registerId,
+      },
+      token: token,
+      tag: 'daily_recommendations',
+    );
+
+    if (response != null) {
+      return MatchesResponseModel.fromJson(response);
+    }
+    return null;
+  }
+
+  /// Your Matches — preference-based
+  Future<MatchesResponseModel?> getYourMatches({
+    required String registerId,
+    String? token,
+    int page = 1,
+    int limit = 8,
+  }) async {
+    final response = await get(
+      Endpoints.matches,
+      queryParameters: {'page': page, 'limit': limit, 'id': registerId},
+      token: token,
+      tag: 'your_matches',
+    );
+
+    if (response != null) {
+      return MatchesResponseModel.fromJson(response);
+    }
+    return null;
+  }
+
+  /// Recently Joined — profiles registered in the last 7 days
+  Future<MatchesResponseModel?> getRecentlyJoined({
+    required String registerId,
+    String? token,
+    int page = 1,
+    int limit = 8,
+  }) async {
+    final now = DateTime.now();
+    final cutoff = now.subtract(const Duration(days: 7));
+    final dateStr =
+        '${cutoff.year}-${cutoff.month.toString().padLeft(2, '0')}-${cutoff.day.toString().padLeft(2, '0')}';
+
+    final response = await get(
+      Endpoints.matches,
+      queryParameters: {
+        'page': page,
+        'limit': limit,
+        'createdDate': dateStr,
+        'sortOrder': 'DESC',
+        'sortBy': 'createdAt',
+        'id': registerId,
+      },
+      token: token,
+      tag: 'recently_joined',
+    );
+
+    if (response != null) {
+      return MatchesResponseModel.fromJson(response);
+    }
+    return null;
   }
 
   Future<Map<String, dynamic>?> uploadImage({

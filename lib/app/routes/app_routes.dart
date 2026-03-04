@@ -15,6 +15,8 @@ abstract class Routes {
   static const STEP8 = _Paths.STEP8;
   static const OTP = _Paths.OTP;
   static const LOGIN = _Paths.LOGIN;
+  static const MATCHES = _Paths.MATCHES;
+  static const MAIN = _Paths.MAIN;
 }
 
 abstract class _Paths {
@@ -31,4 +33,6 @@ abstract class _Paths {
   static const STEP8 = '/step8';
   static const OTP = '/otp';
   static const LOGIN = '/login';
+  static const MATCHES = '/matches';
+  static const MAIN = '/main';
 }
