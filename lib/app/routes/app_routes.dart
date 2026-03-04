@@ -17,6 +17,8 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const MATCHES = _Paths.MATCHES;
   static const MAIN = _Paths.MAIN;
+  static const PROFILE_DETAILS = _Paths.PROFILE_DETAILS;
+  static const MY_PROFILE = _Paths.MY_PROFILE;
 }
 
 abstract class _Paths {
@@ -35,4 +37,6 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const MATCHES = '/matches';
   static const MAIN = '/main';
+  static const PROFILE_DETAILS = '/profile-details';
+  static const MY_PROFILE = '/my-profile';
 }

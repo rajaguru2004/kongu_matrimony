@@ -5,6 +5,7 @@ import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/data/services/auth_service.dart';
+import 'package:kongu_matrimony/app/modules/home/controllers/home_controller.dart';
 
 class MatchesController extends GetxController {
   final _api = ApiService();
@@ -156,6 +157,11 @@ class MatchesController extends GetxController {
       'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
     );
 
+    // Send interest on right swipe
+    if (direction == CardSwiperDirection.right) {
+      sendInterest(profiles[previousIndex]);
+    }
+
     // Check if we need to load more cards in Tinder view
     if (currentIndex != null && currentIndex >= profiles.length - 3) {
       fetchProfiles(loadMore: true);
@@ -166,4 +172,34 @@ class MatchesController extends GetxController {
 
   void swipeLeft() => swiperController.swipe(CardSwiperDirection.left);
   void swipeRight() => swiperController.swipe(CardSwiperDirection.right);
+
+  Future<void> sendInterest(UserModel targetUser) async {
+    final success = await _api.sendInterest(
+      senderId: _auth.registerId,
+      receiverId: targetUser.registerId,
+      token: _auth.token,
+    );
+
+    if (success) {
+      final index = profiles.indexWhere(
+        (p) => p.registerId == targetUser.registerId,
+      );
+      if (index != -1) {
+        profiles[index] = targetUser.copyWith(interestStatus: 'pending');
+      }
+
+      // Refresh Home screen if it exists
+      if (Get.isRegistered<HomeController>()) {
+        Get.find<HomeController>().fetchAll();
+      }
+
+      Get.snackbar(
+        'Interest Sent',
+        'Your interest has been sent to ${targetUser.name}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    }
+  }
 }

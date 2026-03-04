@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:kongu_matrimony/app/data/models/interest_model.dart';
 import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
 
@@ -203,6 +204,71 @@ class ApiService {
       return MatchesResponseModel.fromJson(response);
     }
     return null;
+  }
+
+  Future<bool> sendInterest({
+    required String senderId,
+    required String receiverId,
+    required String token,
+  }) async {
+    final response = await _dio.post(
+      Endpoints.sendInterest,
+      data: {'senderRegisterId': senderId, 'receiverRegisterId': receiverId},
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data['success'] == true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<InterestsResponseModel?> getSentInterests({
+    required String registerId,
+    required String token,
+  }) async {
+    final response = await get(
+      Endpoints.getSentInterests(registerId),
+      queryParameters: {'intereststate': 'sent'},
+      token: token,
+      tag: 'sent_interests',
+    );
+
+    if (response != null) {
+      return InterestsResponseModel.fromJson(response);
+    }
+    return null;
+  }
+
+  Future<bool> cancelInterest({
+    required String interestId,
+    required String token,
+  }) async {
+    try {
+      final response = await _dio.put(
+        Endpoints.cancelInterest(interestId),
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (response.data['success'] == true) {
+          return true;
+        }
+      }
+      return false;
+    } on DioException catch (e) {
+      final message =
+          e.response?.data?['message'] ??
+          e.message ??
+          'Failed to cancel interest.';
+      _showError(message.toString());
+      return false;
+    } catch (e) {
+      _showError('Unexpected error: $e');
+      return false;
+    }
   }
 
   Future<Map<String, dynamic>?> uploadImage({

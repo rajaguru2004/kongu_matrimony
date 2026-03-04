@@ -31,4 +31,12 @@ class Endpoints {
 
   // Home
   static const String matches = "$baseUrl/website/matches";
+  static const String sendInterest = "$baseUrl/website/interest/send";
+  static String getSentInterests(String registerId) =>
+      "$baseUrl/website/interest/user/$registerId";
+  static String cancelInterest(String interestId) =>
+      "$baseUrl/website/interest/cancel/$interestId";
+
+  static String me(String registerId) =>
+      "$baseUrl/website/user/me?id=$registerId";
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
+import 'package:kongu_matrimony/app/routes/app_pages.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 import '../controllers/matches_controller.dart';
 
@@ -200,104 +201,127 @@ class _TinderMatchCard extends StatelessWidget {
     final hasPhoto =
         match.profilePhotoUrl.isNotEmpty && match.profilePhotoUrl != '';
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Stack(
-          children: [
-            // Photo section
-            Positioned.fill(
-              child: hasPhoto
-                  ? Image.network(
-                      match.profilePhotoUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          _PhotoPlaceholder(name: match.name),
-                    )
-                  : _PhotoPlaceholder(name: match.name),
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.PROFILE_DETAILS, arguments: match),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
-            // Gradient Overlay
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
-                    begin: Alignment.center,
-                    end: Alignment.bottomCenter,
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Stack(
+            children: [
+              // Photo section
+              Positioned.fill(
+                child: hasPhoto
+                    ? Image.network(
+                        match.profilePhotoUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            _PhotoPlaceholder(name: match.name),
+                      )
+                    : _PhotoPlaceholder(name: match.name),
+              ),
+              // Gradient Overlay
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.7),
+                      ],
+                      begin: Alignment.center,
+                      end: Alignment.bottomCenter,
+                    ),
                   ),
                 ),
               ),
-            ),
-            // Info section
-            Positioned(
-              bottom: 30,
-              left: 20,
-              right: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CommonText(
-                    match.name.trim(),
-                    style: const TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _kPrimary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: CommonText(
-                      '${match.age} yrs · ${match.height}',
+              // Info section
+              Positioned(
+                bottom: 30,
+                left: 20,
+                right: 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonText(
+                      match.name.trim(),
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            if (match.isCompleted)
-              Positioned(
-                top: 20,
-                right: 20,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.verified_rounded,
-                    color: _kAccent,
-                    size: 20,
-                  ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _kPrimary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: CommonText(
+                        '${match.age} yrs · ${match.height}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
+              if (match.isCompleted)
+                Positioned(
+                  top: 20,
+                  right: 20,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.verified_rounded,
+                      color: _kAccent,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              if (match.interestStatus != null)
+                Positioned(
+                  top: 20,
+                  left: 20,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.favorite_rounded,
+                      color: Color(0xFFFF4B4B),
+                      size: 24,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -328,7 +352,7 @@ class _MatchGridCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-          onTap: () {},
+          onTap: () => Get.toNamed(Routes.PROFILE_DETAILS, arguments: match),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -360,6 +384,23 @@ class _MatchGridCard extends StatelessWidget {
                           child: const Icon(
                             Icons.verified_rounded,
                             color: _kAccent,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    if (match.interestStatus != null)
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.favorite_rounded,
+                            color: Color(0xFFFF4B4B),
                             size: 16,
                           ),
                         ),
@@ -397,7 +438,10 @@ class _MatchGridCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => Get.toNamed(
+                          Routes.PROFILE_DETAILS,
+                          arguments: match,
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _kPrimary,
                           foregroundColor: Colors.white,
@@ -479,20 +523,74 @@ class _PhotoPlaceholder extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_kPrimaryDark, _kPrimary],
+          colors: [_kPrimary.withOpacity(0.1), _kPrimary.withOpacity(0.2)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
-      child: Center(
-        child: Text(
-          initials,
-          style: const TextStyle(
-            fontSize: 80,
-            fontWeight: FontWeight.bold,
-            color: Colors.white24,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Background Sparkles
+          Positioned(
+            top: 40,
+            left: 40,
+            child: Opacity(
+              opacity: 0.15,
+              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 24),
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 60,
+            right: 40,
+            child: Opacity(
+              opacity: 0.1,
+              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 32),
+            ),
+          ),
+          Positioned(
+            top: 100,
+            right: 60,
+            child: Opacity(
+              opacity: 0.08,
+              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 20),
+            ),
+          ),
+
+          // Central Diamond Decoration
+          Transform.rotate(
+            angle: 0.785, // 45 degrees
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: _kPrimary.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+
+          // Initials
+          CommonText(
+            initials,
+            style: const TextStyle(
+              fontSize: 80,
+              fontWeight: FontWeight.bold,
+              color: _kPrimary,
+              letterSpacing: 2,
+            ),
+          ),
+
+          // Foreground Sparkle
+          Positioned(
+            top: 140,
+            left: 60,
+            child: Opacity(
+              opacity: 0.2,
+              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 24),
+            ),
+          ),
+        ],
       ),
     );
   }

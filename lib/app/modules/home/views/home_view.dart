@@ -384,7 +384,7 @@ class _MatchCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
         child: InkWell(
-          onTap: () {},
+          onTap: () => Get.toNamed(Routes.PROFILE_DETAILS, arguments: match),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -441,6 +441,23 @@ class _MatchCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                  if (match.interestStatus != null)
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.9),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.favorite_rounded,
+                          color: Color(0xFFFF4B4B),
+                          size: 18,
+                        ),
+                      ),
+                    ),
                 ],
               ),
               // ── Info section ────────────────────────────────────────────
@@ -492,7 +509,8 @@ class _MatchCard extends StatelessWidget {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Get.toNamed(Routes.PROFILE_DETAILS, arguments: match),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.white,
@@ -661,7 +679,7 @@ class _RecentCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-          onTap: () {},
+          onTap: () => Get.toNamed(Routes.PROFILE_DETAILS, arguments: match),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -696,6 +714,23 @@ class _RecentCard extends StatelessWidget {
                             Icons.verified_rounded,
                             color: _kAccent,
                             size: 18,
+                          ),
+                        ),
+                      ),
+                    if (match.interestStatus != null)
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.favorite_rounded,
+                            color: Color(0xFFFF4B4B),
+                            size: 12,
                           ),
                         ),
                       ),
@@ -735,8 +770,10 @@ class _RecentCard extends StatelessWidget {
                     color: _kPrimary.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
-                    Icons.favorite_outline_rounded,
+                  child: Icon(
+                    match.interestStatus != null
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_outline_rounded,
                     color: _kPrimary,
                     size: 20,
                   ),

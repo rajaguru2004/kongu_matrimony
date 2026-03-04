@@ -28,6 +28,10 @@ import '../modules/matches/bindings/matches_binding.dart';
 import '../modules/matches/views/matches_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
+import '../modules/profile_details/bindings/profile_details_binding.dart';
+import '../modules/profile_details/views/profile_details_view.dart';
+import '../modules/my_profile/bindings/my_profile_binding.dart';
+import '../modules/my_profile/views/my_profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -106,6 +110,16 @@ class AppPages {
       name: _Paths.MAIN,
       page: () => const MainView(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_DETAILS,
+      page: () => const ProfileDetailsView(),
+      binding: ProfileDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_PROFILE,
+      page: () => const MyProfileView(),
+      binding: MyProfileBinding(),
     ),
   ];
 }

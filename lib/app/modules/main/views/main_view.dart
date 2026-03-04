@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import '../controllers/main_controller.dart';
 import '../../home/views/home_view.dart';
 import '../../matches/views/matches_view.dart';
-import '../../../utils/common_text.dart';
+import '../../interests/views/interests_view.dart';
+import '../../my_profile/views/my_profile_view.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({super.key});
@@ -19,8 +20,8 @@ class MainView extends GetView<MainController> {
           children: const [
             HomeView(),
             MatchesView(),
-            _PlaceholderView(title: 'Interests'),
-            _PlaceholderView(title: 'Profile'),
+            InterestsView(),
+            MyProfileView(),
           ],
         ),
       ),
@@ -82,33 +83,6 @@ class MainView extends GetView<MainController> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PlaceholderView extends StatelessWidget {
-  final String title;
-  const _PlaceholderView({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: CommonText(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFF8B0000),
-      ),
-      body: Center(
-        child: CommonText(
-          '$title Screen Coming Soon',
-          style: const TextStyle(fontSize: 18, color: Colors.grey),
         ),
       ),
     );
