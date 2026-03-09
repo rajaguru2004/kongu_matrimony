@@ -19,6 +19,7 @@ abstract class Routes {
   static const MAIN = _Paths.MAIN;
   static const PROFILE_DETAILS = _Paths.PROFILE_DETAILS;
   static const MY_PROFILE = _Paths.MY_PROFILE;
+  static const PLANS = _Paths.PLANS;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const MAIN = '/main';
   static const PROFILE_DETAILS = '/profile-details';
   static const MY_PROFILE = '/my-profile';
+  static const PLANS = '/plans';
 }

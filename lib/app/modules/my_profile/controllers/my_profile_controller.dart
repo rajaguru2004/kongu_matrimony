@@ -51,6 +51,6 @@ class MyProfileController extends GetxController {
 
   Future<void> logout() async {
     await AuthService.to.logout();
-    Get.offAllNamed(Routes.LOGIN);
+    Get.offAllNamed(Routes.INITIAL_SIGN);
   }
 }

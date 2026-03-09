@@ -32,6 +32,8 @@ import '../modules/profile_details/bindings/profile_details_binding.dart';
 import '../modules/profile_details/views/profile_details_view.dart';
 import '../modules/my_profile/bindings/my_profile_binding.dart';
 import '../modules/my_profile/views/my_profile_view.dart';
+import '../modules/plans/bindings/plans_binding.dart';
+import '../modules/plans/views/plans_view.dart';
 
 part 'app_routes.dart';
 
@@ -120,6 +122,11 @@ class AppPages {
       name: _Paths.MY_PROFILE,
       page: () => const MyProfileView(),
       binding: MyProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLANS,
+      page: () => const PlansView(),
+      binding: PlansBinding(),
     ),
   ];
 }

@@ -45,4 +45,9 @@ class Endpoints {
 
   static String me(String registerId) =>
       "$baseUrl/website/user/me?id=$registerId";
+
+  // Plans & Payments
+  static const String plans = "$baseUrl/website/plan";
+  static const String createOrder = "$baseUrl/website/payment/create-order";
+  static const String verifyPayment = "$baseUrl/website/payment/verify";
 }
