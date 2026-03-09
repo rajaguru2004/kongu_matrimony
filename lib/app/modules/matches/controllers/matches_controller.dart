@@ -3,6 +3,8 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
+import 'package:kongu_matrimony/app/data/models/setup_model.dart';
+import 'package:kongu_matrimony/app/endpoints.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/data/services/auth_service.dart';
@@ -29,69 +31,30 @@ class MatchesController extends GetxController {
   // Filters
   final Rx<FilterModel?> activeFilter = Rx<FilterModel?>(null);
 
-  // Filter Options
-  final List<String> ageOptions = List.generate(
-    43,
-    (index) => (index + 18).toString(),
-  );
+  // Filter Options (Dynamic)
+  final RxList<SetupItem> doshams = <SetupItem>[].obs;
+  final RxList<SetupItem> castes = <SetupItem>[].obs;
+  final RxList<SetupItem> educations = <SetupItem>[].obs;
+  final RxList<SetupItem> occupations = <SetupItem>[].obs;
+
   final List<String> incomeOptions = [
-    'Any Income',
+    'Any',
     'Below 2 Lakhs',
     '2 - 5 Lakhs',
     '5 - 10 Lakhs',
     '10 - 20 Lakhs',
     'Above 20 Lakhs',
   ];
-  final List<String> educationOptions = [
-    'Any Education',
-    'B.E / B.Tech',
-    'M.E / M.Tech',
-    'M.B.A',
-    'M.C.A',
-    'B.Sc',
-    'M.Sc',
-    'B.Com',
-    'M.Com',
-    'B.A',
-    'M.A',
-    'B.B.A',
-    'B.C.A',
-    'MBBS',
-    'BDS',
-    'Diploma',
-    'ITI',
-    '12th',
-    '10th',
-  ];
-  final List<String> jobOptions = [
-    'Any Job',
-    'Software Engineer',
-    'Teacher/Professor',
-    'Doctor',
-    'Engineer',
-    'Manager',
-    'Banker',
-    'Police/Military',
-    'Farmer',
-    'Business Person',
-    'Other',
-  ];
-  final List<String> doshamOptions = [
-    'Any Dosham',
-    'None',
-    'Sevvai Dosham',
-    'Sarpa Dosham (Ragu/Kethu)',
-    'Kala Sarpa Dosham',
-  ];
+
   final List<String> maritalStatusOptions = [
-    'Any Status',
+    'Any',
     'Unmarried',
     'Divorced',
     'Widowed',
     'Awaiting Divorce',
   ];
   final List<String> countryOptions = [
-    'Select Countries',
+    'Any',
     'India',
     'USA',
     'UK',
@@ -114,6 +77,7 @@ class MatchesController extends GetxController {
     super.onInit();
     type = Get.arguments?['type'] ?? 'daily';
     _setTitle();
+    _fetchSetupData();
     fetchProfiles();
 
     // Add scroll listener for infinite scroll
@@ -134,6 +98,24 @@ class MatchesController extends GetxController {
 
   void toggleView() {
     isSwipeMode.value = !isSwipeMode.value;
+  }
+
+  Future<void> _fetchSetupData() async {
+    try {
+      final results = await Future.wait([
+        _api.getSetupData(Endpoints.doshams),
+        _api.getSetupData(Endpoints.castes),
+        _api.getSetupData(Endpoints.educations),
+        _api.getSetupData(Endpoints.occupations),
+      ]);
+
+      if (results[0] != null) doshams.assignAll(results[0]!.data);
+      if (results[1] != null) castes.assignAll(results[1]!.data);
+      if (results[2] != null) educations.assignAll(results[2]!.data);
+      if (results[3] != null) occupations.assignAll(results[3]!.data);
+    } catch (e) {
+      debugPrint('Error fetching setup data: $e');
+    }
   }
 
   void _setTitle() {

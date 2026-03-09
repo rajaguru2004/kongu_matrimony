@@ -24,12 +24,12 @@ class InitialSignView extends GetView<InitialSignController> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [AppColors.primary, AppColors.primaryDark],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(32),
                     bottomRight: Radius.circular(32),
                   ),
@@ -50,7 +50,7 @@ class InitialSignView extends GetView<InitialSignController> {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
+                            color: AppColors.primary.withOpacity(0.15),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -76,7 +76,7 @@ class InitialSignView extends GetView<InitialSignController> {
                     CommonText(
                       'Find your perfect life partner',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: AppColors.white.withOpacity(0.7),
                         fontSize: isSmallScreen ? 12 : 14,
                       ),
                     ),

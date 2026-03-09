@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
-const _kPrimary = Color(0xFF8B0000); // deep maroon
-const _kPrimaryLight = Color(0xFFAA2222);
-const _kPrimaryDark = Color(0xFF5D0000);
-const _kAccent = Color(0xFFD4AF37); // gold
-const _kBg = Color(0xFFFDFBF7); // refined warm ivory
-const _kCard = Colors.white;
-const _kTextPrimary = Color(0xFF2A0A0A);
-const _kTextSecondary = Color(0xFF6B5E5E);
+// Theme colors are now centralized in AppColors
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -22,9 +16,9 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _kBg,
+      backgroundColor: AppColors.background,
       body: RefreshIndicator(
-        color: _kPrimary,
+        color: AppColors.primary,
         onRefresh: controller.fetchAll,
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -90,8 +84,8 @@ class HomeView extends GetView<HomeController> {
       expandedHeight: 180,
       pinned: true,
       elevation: 0,
-      backgroundColor: _kPrimary,
-      surfaceTintColor: _kPrimary,
+      backgroundColor: AppColors.primary,
+      surfaceTintColor: AppColors.primary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
       ),
@@ -123,7 +117,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [_kPrimaryDark, _kPrimary],
+                    colors: [AppColors.primaryDark, AppColors.primary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -194,7 +188,7 @@ class HomeView extends GetView<HomeController> {
                               const SizedBox(width: 12),
                               const Icon(
                                 Icons.tune_rounded,
-                                color: _kPrimary,
+                                color: AppColors.primary,
                                 size: 20,
                               ),
                             ],
@@ -262,13 +256,16 @@ class _SectionHeader extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _kTextPrimary,
+                    color: AppColors.textDark,
                     letterSpacing: -0.5,
                   ),
                 ),
                 CommonText(
                   subtitle,
-                  style: const TextStyle(fontSize: 13, color: _kTextSecondary),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textGrey,
+                  ),
                 ),
               ],
             ),
@@ -276,12 +273,12 @@ class _SectionHeader extends StatelessWidget {
           TextButton(
             onPressed: onViewAll,
             style: TextButton.styleFrom(
-              foregroundColor: _kPrimary,
+              foregroundColor: AppColors.primary,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              backgroundColor: _kPrimary.withOpacity(0.05),
+              backgroundColor: AppColors.primary.withOpacity(0.05),
             ),
             child: Row(
               children: const [
@@ -371,7 +368,7 @@ class _MatchCard extends StatelessWidget {
       width: 190,
       margin: const EdgeInsets.only(right: 16, bottom: 8),
       decoration: BoxDecoration(
-        color: _kCard,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -411,7 +408,7 @@ class _MatchCard extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: _kAccent,
+                          color: AppColors.accent,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -475,7 +472,7 @@ class _MatchCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: _kTextPrimary,
+                          color: AppColors.textDark,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -497,12 +494,12 @@ class _MatchCard extends StatelessWidget {
                   height: 38,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [_kPrimary, _kPrimaryLight],
+                      colors: [AppColors.primary, AppColors.primaryLight],
                     ),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: _kPrimary.withOpacity(0.3),
+                        color: AppColors.primary.withOpacity(0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -543,7 +540,7 @@ class _MatchCard extends StatelessWidget {
     if (parts.isEmpty) return const SizedBox.shrink();
     return CommonText(
       parts,
-      style: const TextStyle(fontSize: 12, color: _kTextSecondary),
+      style: const TextStyle(fontSize: 12, color: AppColors.textGrey),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -564,7 +561,10 @@ class _PhotoPlaceholder extends StatelessWidget {
       height: 155,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_kPrimary.withOpacity(0.1), _kPrimary.withOpacity(0.2)],
+          colors: [
+            AppColors.primary.withOpacity(0.1),
+            AppColors.primary.withOpacity(0.2),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -578,7 +578,7 @@ class _PhotoPlaceholder extends StatelessWidget {
             child: Icon(
               Icons.auto_awesome, // replaced with something traditional-looking
               size: 80,
-              color: _kPrimary,
+              color: AppColors.primary,
             ),
           ),
           CommonText(
@@ -586,7 +586,7 @@ class _PhotoPlaceholder extends StatelessWidget {
             style: const TextStyle(
               fontSize: 60,
               fontWeight: FontWeight.bold,
-              color: _kPrimary,
+              color: AppColors.primary,
               letterSpacing: 2,
             ),
           ),
@@ -613,7 +613,9 @@ class _RecentlyJoinedSliverList extends StatelessWidget {
         return const SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 40),
-            child: Center(child: CircularProgressIndicator(color: _kPrimary)),
+            child: Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            ),
           ),
         );
       }
@@ -624,7 +626,7 @@ class _RecentlyJoinedSliverList extends StatelessWidget {
             child: Center(
               child: CommonText(
                 'No new profiles found.',
-                style: TextStyle(color: _kTextSecondary),
+                style: TextStyle(color: AppColors.textGrey),
               ),
             ),
           ),
@@ -665,7 +667,7 @@ class _RecentCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: _kCard,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -674,7 +676,10 @@ class _RecentCard extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(color: _kAccent.withOpacity(0.1), width: 0.5),
+        border: Border.all(
+          color: AppColors.accent.withOpacity(0.1),
+          width: 0.5,
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -712,7 +717,7 @@ class _RecentCard extends StatelessWidget {
                           ),
                           child: const Icon(
                             Icons.verified_rounded,
-                            color: _kAccent,
+                            color: AppColors.accent,
                             size: 18,
                           ),
                         ),
@@ -748,7 +753,7 @@ class _RecentCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: _kTextPrimary,
+                          color: AppColors.textDark,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -767,14 +772,14 @@ class _RecentCard extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: _kPrimary.withOpacity(0.08),
+                    color: AppColors.primary.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     match.interestStatus != null
                         ? Icons.favorite_rounded
                         : Icons.favorite_outline_rounded,
-                    color: _kPrimary,
+                    color: AppColors.primary,
                     size: 20,
                   ),
                 ),
@@ -793,7 +798,7 @@ class _RecentCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 2),
       child: CommonText(
         text,
-        style: const TextStyle(fontSize: 12, color: _kTextSecondary),
+        style: const TextStyle(fontSize: 12, color: AppColors.textGrey),
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -814,7 +819,7 @@ class _SmallPlaceholder extends StatelessWidget {
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        color: _kPrimary.withOpacity(0.08),
+        color: AppColors.primary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
@@ -823,7 +828,7 @@ class _SmallPlaceholder extends StatelessWidget {
           style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: _kPrimary,
+            color: AppColors.primary,
           ),
         ),
       ),

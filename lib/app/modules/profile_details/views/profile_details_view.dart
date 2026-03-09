@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import '../../../utils/common_text.dart';
 import '../controllers/profile_details_controller.dart';
 
-const _kPrimary = Color(0xFF8B0000); // deep maroon
-const _kPrimaryDark = Color(0xFF5D0000);
-const _kAccent = Color(0xFFD4AF37); // gold
-const _kBg = Color(0xFFFDFBF7); // refined warm ivory
-const _kTextPrimary = Color(0xFF2A0A0A);
-const _kTextSecondary = Color(0xFF6B5E5E);
+// Theme colors are now centralized in AppColors
 
 class ProfileDetailsView extends GetView<ProfileDetailsController> {
   const ProfileDetailsView({super.key});
@@ -17,7 +13,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        backgroundColor: _kBg,
+        backgroundColor: AppColors.background,
         body: CustomScrollView(
           slivers: [
             _buildSliverAppBar(),
@@ -51,7 +47,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
     return SliverAppBar(
       expandedHeight: 400,
       pinned: true,
-      backgroundColor: _kPrimary,
+      backgroundColor: AppColors.primary,
       iconTheme: const IconThemeData(color: Colors.white),
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
@@ -94,7 +90,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_kPrimaryDark, _kPrimary],
+          colors: [AppColors.primaryDark, AppColors.primary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -147,9 +143,12 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
               width: 140,
               height: 140,
               decoration: BoxDecoration(
-                color: _kAccent.withOpacity(0.15),
+                color: AppColors.accent.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: _kAccent.withOpacity(0.3), width: 1),
+                border: Border.all(
+                  color: AppColors.accent.withOpacity(0.3),
+                  width: 1,
+                ),
               ),
             ),
           ),
@@ -178,7 +177,11 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             left: 80,
             child: Opacity(
               opacity: 0.4,
-              child: const Icon(Icons.auto_awesome, color: _kAccent, size: 28),
+              child: const Icon(
+                Icons.auto_awesome,
+                color: AppColors.accent,
+                size: 28,
+              ),
             ),
           ),
         ],
@@ -201,12 +204,12 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: _kTextPrimary,
+                    color: AppColors.textDark,
                   ),
                 ),
               ),
               if (controller.user.isCompleted)
-                const Icon(Icons.verified, color: _kAccent, size: 24),
+                const Icon(Icons.verified, color: AppColors.accent, size: 24),
             ],
           ),
           const SizedBox(height: 4),
@@ -214,7 +217,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             'ID: ${controller.user.registerId}',
             style: const TextStyle(
               fontSize: 14,
-              color: _kTextSecondary,
+              color: AppColors.textGrey,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -231,7 +234,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
-            child: Divider(color: _kAccent, thickness: 0.5),
+            child: Divider(color: AppColors.accent, thickness: 0.5),
           ),
         ],
       ),
@@ -242,21 +245,21 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: _kPrimary.withOpacity(0.05),
+        color: AppColors.primary.withOpacity(0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _kPrimary.withOpacity(0.1)),
+        border: Border.all(color: AppColors.primary.withOpacity(0.1)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: _kPrimary),
+          Icon(icon, size: 16, color: AppColors.primary),
           const SizedBox(width: 6),
           CommonText(
             label,
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: _kPrimary,
+              color: AppColors.primary,
             ),
           ),
         ],
@@ -277,14 +280,14 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
         children: [
           Row(
             children: [
-              Icon(icon, color: _kPrimary, size: 22),
+              Icon(icon, color: AppColors.primary, size: 22),
               const SizedBox(width: 10),
               CommonText(
                 title,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: _kPrimary,
+                  color: AppColors.primary,
                 ),
               ),
             ],
@@ -308,7 +311,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
               content,
               style: const TextStyle(
                 fontSize: 14,
-                color: _kTextSecondary,
+                color: AppColors.textGrey,
                 height: 1.5,
               ),
             ),
@@ -396,14 +399,14 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
         children: [
           Row(
             children: [
-              Icon(icon, color: _kPrimary, size: 22),
+              Icon(icon, color: AppColors.primary, size: 22),
               const SizedBox(width: 10),
               CommonText(
                 title,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: _kPrimary,
+                  color: AppColors.primary,
                 ),
               ),
             ],
@@ -440,7 +443,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             label,
             style: const TextStyle(
               fontSize: 12,
-              color: _kTextSecondary,
+              color: AppColors.textGrey,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -449,7 +452,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             value,
             style: const TextStyle(
               fontSize: 14,
-              color: _kTextPrimary,
+              color: AppColors.textDark,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -476,7 +479,9 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
         child: ElevatedButton(
           onPressed: isInterestSent ? null : () => controller.sendInterest(),
           style: ElevatedButton.styleFrom(
-            backgroundColor: isInterestSent ? Colors.grey[300] : _kPrimary,
+            backgroundColor: isInterestSent
+                ? Colors.grey[300]
+                : AppColors.primary,
             foregroundColor: isInterestSent ? Colors.grey[600] : Colors.white,
             minimumSize: const Size(double.infinity, 56),
             shape: RoundedRectangleBorder(

@@ -1,0 +1,116 @@
+Analyzing kongu_matrimony...                                    
+
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:161:53 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:186:52 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:281:50 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/home/views/home_view.dart:342:24 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:375:33 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/home/views/home_view.dart:397:45 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/home/views/home_view.dart:397:49 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:415:51 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:448:47 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:502:50 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:565:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:566:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:674:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:680:35 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/home/views/home_view.dart:703:49 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/home/views/home_view.dart:703:53 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:732:49 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:775:46 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/home/views/home_view.dart:822:34 • deprecated_member_use
+   info • Unnecessary 'const' keyword • lib/app/modules/initial_sign/views/initial_sign_view.dart:27:29 • unnecessary_const
+   info • Unnecessary 'const' keyword • lib/app/modules/initial_sign/views/initial_sign_view.dart:32:33 • unnecessary_const
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/initial_sign/views/initial_sign_view.dart:53:54 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/initial_sign/views/initial_sign_view.dart:79:48 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/initial_sign/views/initial_sign_view.dart:150:68 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/initial_sign/views/initial_sign_view.dart:248:34 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/initial_sign/views/initial_sign_view.dart:253:60 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/interests/views/interests_view.dart:86:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/interests/views/interests_view.dart:160:66 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/main/views/main_view.dart:40:37 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:77:44 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:474:47 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:516:35 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/matches/views/matches_view.dart:532:43 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/matches/views/matches_view.dart:532:47 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:544:38 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:617:43 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:650:33 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/matches/views/matches_view.dart:674:47 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/matches/views/matches_view.dart:674:51 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:702:49 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:798:22 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:800:41 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:831:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:832:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/matches/views/matches_view.dart:886:42 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/my_profile/views/my_profile_view.dart:98:35 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/my_profile/views/my_profile_view.dart:98:39 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/my_profile/views/my_profile_view.dart:106:36 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/my_profile/views/my_profile_view.dart:108:36 • deprecated_member_use
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:121:28 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:147:27 • strict_top_level_inference
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/my_profile/views/my_profile_view.dart:204:34 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/my_profile/views/my_profile_view.dart:206:53 • deprecated_member_use
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:257:26 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:273:28 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:287:26 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:301:27 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:315:27 • strict_top_level_inference
+   info • Missing type annotation • lib/app/modules/my_profile/views/my_profile_view.dart:329:32 • strict_top_level_inference
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/my_profile/views/my_profile_view.dart:424:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/otp/views/otp_view.dart:36:44 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/otp/views/otp_view.dart:94:50 • deprecated_member_use
+   info • Unnecessary use of multiple underscores • lib/app/modules/profile_details/views/profile_details_view.dart:60:35 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores • lib/app/modules/profile_details/views/profile_details_view.dart:60:39 • unnecessary_underscores
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:68:36 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:70:36 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:146:41 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:149:43 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:248:34 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:250:53 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:304:39 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:422:39 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/profile_details/views/profile_details_view.dart:472:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/step7/views/step7_view.dart:46:52 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/step8/views/step8_view.dart:60:60 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/step8/views/step8_view.dart:96:65 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/modules/step8/views/step8_view.dart:125:56 • deprecated_member_use
+   info • The constant name 'INITIAL' isn't a lowerCamelCase identifier • lib/app/routes/app_pages.dart:41:16 • constant_identifier_names
+   info • The constant name 'HOME' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:6:16 • constant_identifier_names
+   info • The constant name 'INITIAL_SIGN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:7:16 • constant_identifier_names
+   info • The constant name 'STEP1' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:8:16 • constant_identifier_names
+   info • The constant name 'STEP2' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:9:16 • constant_identifier_names
+   info • The constant name 'STEP3' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:10:16 • constant_identifier_names
+   info • The constant name 'STEP4' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:11:16 • constant_identifier_names
+   info • The constant name 'STEP5' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:12:16 • constant_identifier_names
+   info • The constant name 'STEP6' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:13:16 • constant_identifier_names
+   info • The constant name 'STEP7' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:14:16 • constant_identifier_names
+   info • The constant name 'STEP8' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:15:16 • constant_identifier_names
+   info • The constant name 'OTP' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:16:16 • constant_identifier_names
+   info • The constant name 'LOGIN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:17:16 • constant_identifier_names
+   info • The constant name 'MATCHES' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:18:16 • constant_identifier_names
+   info • The constant name 'MAIN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:19:16 • constant_identifier_names
+   info • The constant name 'PROFILE_DETAILS' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:20:16 • constant_identifier_names
+   info • The constant name 'MY_PROFILE' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:21:16 • constant_identifier_names
+   info • The constant name 'HOME' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:26:16 • constant_identifier_names
+   info • The constant name 'INITIAL_SIGN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:27:16 • constant_identifier_names
+   info • The constant name 'STEP1' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:28:16 • constant_identifier_names
+   info • The constant name 'STEP2' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:29:16 • constant_identifier_names
+   info • The constant name 'STEP3' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:30:16 • constant_identifier_names
+   info • The constant name 'STEP4' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:31:16 • constant_identifier_names
+   info • The constant name 'STEP5' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:32:16 • constant_identifier_names
+   info • The constant name 'STEP6' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:33:16 • constant_identifier_names
+   info • The constant name 'STEP7' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:34:16 • constant_identifier_names
+   info • The constant name 'STEP8' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:35:16 • constant_identifier_names
+   info • The constant name 'OTP' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:36:16 • constant_identifier_names
+   info • The constant name 'LOGIN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:37:16 • constant_identifier_names
+   info • The constant name 'MATCHES' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:38:16 • constant_identifier_names
+   info • The constant name 'MAIN' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:39:16 • constant_identifier_names
+   info • The constant name 'PROFILE_DETAILS' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:40:16 • constant_identifier_names
+   info • The constant name 'MY_PROFILE' isn't a lowerCamelCase identifier • lib/app/routes/app_routes.dart:41:16 • constant_identifier_names
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/utils/step_widgets.dart:243:54 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/utils/step_widgets.dart:248:42 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/app/utils/step_widgets.dart:391:52 • deprecated_member_use
+

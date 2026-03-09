@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/modules/interests/controllers/interests_controller.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 
 class InterestsView extends GetView<InterestsController> {
@@ -9,13 +10,13 @@ class InterestsView extends GetView<InterestsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const CommonText(
           'Interests Sent',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF8B0000),
+        backgroundColor: AppColors.primary,
         centerTitle: true,
         elevation: 0,
       ),
@@ -23,7 +24,7 @@ class InterestsView extends GetView<InterestsController> {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8B0000)),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
             ),
           );
         }
@@ -34,7 +35,7 @@ class InterestsView extends GetView<InterestsController> {
 
         return RefreshIndicator(
           onRefresh: () async => controller.refreshInterests(),
-          color: const Color(0xFF8B0000),
+          color: AppColors.primary,
           child: ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemCount: controller.interests.length,
@@ -156,10 +157,10 @@ class InterestsView extends GetView<InterestsController> {
                             onPressed: () =>
                                 _showCancelDialog(interest.interestId),
                             style: TextButton.styleFrom(
-                              backgroundColor: const Color(
-                                0xFF8B0000,
-                              ).withOpacity(0.1),
-                              foregroundColor: const Color(0xFF8B0000),
+                              backgroundColor: AppColors.primary.withOpacity(
+                                0.1,
+                              ),
+                              foregroundColor: AppColors.primary,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
                               ),
@@ -210,7 +211,7 @@ class InterestsView extends GetView<InterestsController> {
             child: const CommonText(
               'Yes, Cancel',
               style: TextStyle(
-                color: Color(0xFF8B0000),
+                color: AppColors.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -6,12 +6,14 @@ import '../../matches/views/matches_view.dart';
 import '../../interests/views/interests_view.dart';
 import '../../my_profile/views/my_profile_view.dart';
 
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
+
 class MainView extends GetView<MainController> {
   const MainView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF8B0000);
+    const primaryColor = AppColors.primary;
 
     return Scaffold(
       body: Obx(

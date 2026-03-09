@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import '../../../utils/common_text.dart';
 import '../controllers/my_profile_controller.dart';
 
-const _kPrimary = Color(0xFF8B0000); // deep maroon
-const _kPrimaryDark = Color(0xFF5D0000);
-const _kAccent = Color(0xFFD4AF37); // gold
-const _kBg = Color(0xFFFDFBF7); // refined warm ivory
-const _kTextPrimary = Color(0xFF2A0A0A);
-const _kTextSecondary = Color(0xFF6B5E5E);
+// Theme colors are now centralized in AppColors
 
 class MyProfileView extends GetView<MyProfileController> {
   const MyProfileView({super.key});
@@ -16,11 +12,11 @@ class MyProfileView extends GetView<MyProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _kBg,
+      backgroundColor: AppColors.background,
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(color: _kPrimary),
+            child: CircularProgressIndicator(color: AppColors.primary),
           );
         }
 
@@ -82,7 +78,7 @@ class MyProfileView extends GetView<MyProfileController> {
     return SliverAppBar(
       expandedHeight: 350,
       pinned: true,
-      backgroundColor: _kPrimary,
+      backgroundColor: AppColors.primary,
       iconTheme: const IconThemeData(color: Colors.white),
       actions: [
         IconButton(
@@ -130,7 +126,7 @@ class MyProfileView extends GetView<MyProfileController> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [_kPrimaryDark, _kPrimary],
+          colors: [AppColors.primaryDark, AppColors.primary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -163,12 +159,12 @@ class MyProfileView extends GetView<MyProfileController> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: _kTextPrimary,
+                    color: AppColors.textDark,
                   ),
                 ),
               ),
               if (user.isCompleted == true)
-                const Icon(Icons.verified, color: _kAccent, size: 24),
+                const Icon(Icons.verified, color: AppColors.accent, size: 24),
             ],
           ),
           const SizedBox(height: 4),
@@ -176,7 +172,7 @@ class MyProfileView extends GetView<MyProfileController> {
             'ID: ${user.registerId}',
             style: const TextStyle(
               fontSize: 14,
-              color: _kTextSecondary,
+              color: AppColors.textGrey,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -194,7 +190,7 @@ class MyProfileView extends GetView<MyProfileController> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
-            child: Divider(color: _kAccent, thickness: 0.5),
+            child: Divider(color: AppColors.accent, thickness: 0.5),
           ),
         ],
       ),
@@ -205,21 +201,21 @@ class MyProfileView extends GetView<MyProfileController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: _kPrimary.withOpacity(0.05),
+        color: AppColors.primary.withOpacity(0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _kPrimary.withOpacity(0.1)),
+        border: Border.all(color: AppColors.primary.withOpacity(0.1)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: _kPrimary),
+          Icon(icon, size: 16, color: AppColors.primary),
           const SizedBox(width: 6),
           CommonText(
             label,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: _kPrimary,
+              color: AppColors.primary,
             ),
           ),
         ],
@@ -248,7 +244,7 @@ class MyProfileView extends GetView<MyProfileController> {
               content,
               style: const TextStyle(
                 fontSize: 14,
-                color: _kTextSecondary,
+                color: AppColors.textGrey,
                 height: 1.5,
               ),
             ),
@@ -374,14 +370,14 @@ class MyProfileView extends GetView<MyProfileController> {
   Widget _buildSectionHeader(String title, IconData icon) {
     return Row(
       children: [
-        Icon(icon, color: _kPrimary, size: 22),
+        Icon(icon, color: AppColors.primary, size: 22),
         const SizedBox(width: 10),
         CommonText(
           title,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: _kPrimary,
+            color: AppColors.primary,
           ),
         ),
       ],
@@ -401,7 +397,7 @@ class MyProfileView extends GetView<MyProfileController> {
             label,
             style: const TextStyle(
               fontSize: 12,
-              color: _kTextSecondary,
+              color: AppColors.textGrey,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -410,7 +406,7 @@ class MyProfileView extends GetView<MyProfileController> {
             displayValue,
             style: const TextStyle(
               fontSize: 14,
-              color: _kTextPrimary,
+              color: AppColors.textDark,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -430,7 +426,7 @@ class MyProfileView extends GetView<MyProfileController> {
           offset: const Offset(0, 4),
         ),
       ],
-      border: Border.all(color: _kAccent.withAlpha(30)),
+      border: Border.all(color: AppColors.accent.withAlpha(30)),
     );
   }
 
@@ -457,7 +453,10 @@ class MyProfileView extends GetView<MyProfileController> {
             },
             child: const CommonText(
               'Yes, Logout',
-              style: TextStyle(color: _kPrimary, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

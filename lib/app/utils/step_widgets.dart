@@ -5,10 +5,14 @@ import 'package:kongu_matrimony/app/utils/common_text.dart';
 
 AppBar buildStepAppBar(String title, int step) {
   return AppBar(
-    backgroundColor: AppColors.white,
+    backgroundColor: AppColors.background,
     elevation: 0,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios_new, color: AppColors.textDark, size: 20),
+      icon: const Icon(
+        Icons.arrow_back_ios_new,
+        color: AppColors.textDark,
+        size: 20,
+      ),
       onPressed: () => Get.back(),
     ),
     title: CommonText(

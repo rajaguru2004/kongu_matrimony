@@ -4,16 +4,11 @@ import 'package:get/get.dart';
 import 'package:kongu_matrimony/app/data/models/user_model.dart';
 import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 import 'package:kongu_matrimony/app/utils/common_text.dart';
 import '../controllers/matches_controller.dart';
 
-const _kPrimary = Color(0xFF8B0000); // deep maroon
-const _kPrimaryDark = Color(0xFF5D0000);
-const _kAccent = Color(0xFFD4AF37); // gold
-const _kBg = Color(0xFFFDFBF7); // refined warm ivory
-const _kCard = Colors.white;
-const _kTextPrimary = Color(0xFF2A0A0A);
-const _kTextSecondary = Color(0xFF6B5E5E);
+// Theme colors are now centralized in AppColors
 
 class MatchesView extends GetView<MatchesController> {
   const MatchesView({super.key});
@@ -21,7 +16,7 @@ class MatchesView extends GetView<MatchesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _kBg,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Obx(
           () => CommonText(
@@ -33,13 +28,13 @@ class MatchesView extends GetView<MatchesController> {
             ),
           ),
         ),
-        backgroundColor: _kPrimary,
+        backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [_kPrimaryDark, _kPrimary],
+              colors: [AppColors.primaryDark, AppColors.primary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -67,7 +62,7 @@ class MatchesView extends GetView<MatchesController> {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(color: _kPrimary),
+            child: CircularProgressIndicator(color: AppColors.primary),
           );
         }
 
@@ -79,12 +74,12 @@ class MatchesView extends GetView<MatchesController> {
                 Icon(
                   Icons.person_search_rounded,
                   size: 80,
-                  color: _kPrimary.withOpacity(0.2),
+                  color: AppColors.primary.withOpacity(0.2),
                 ),
                 const SizedBox(height: 16),
                 const CommonText(
                   'No profiles found for this section.',
-                  style: TextStyle(color: _kTextSecondary, fontSize: 16),
+                  style: TextStyle(color: AppColors.textGrey, fontSize: 16),
                 ),
               ],
             ),
@@ -101,7 +96,7 @@ class MatchesView extends GetView<MatchesController> {
   Widget _buildGridView() {
     return RefreshIndicator(
       onRefresh: () => controller.fetchProfiles(),
-      color: _kPrimary,
+      color: AppColors.primary,
       child: ListView(
         controller: controller.scrollController,
         children: [
@@ -125,7 +120,7 @@ class MatchesView extends GetView<MatchesController> {
               return const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Center(
-                  child: CircularProgressIndicator(color: _kPrimary),
+                  child: CircularProgressIndicator(color: AppColors.primary),
                 ),
               );
             }
@@ -200,28 +195,34 @@ class MatchesView extends GetView<MatchesController> {
     final minAge = RxInt(controller.activeFilter.value?.minAge ?? 18);
     final maxAge = RxInt(controller.activeFilter.value?.maxAge ?? 60);
     final annualIncome = RxString(
-      controller.activeFilter.value?.annualIncome ?? 'Any Income',
+      controller.activeFilter.value?.annualIncome ?? 'Any',
     );
-    final familyIncome = RxString(
-      controller.activeFilter.value?.familyIncome ?? 'Any Income',
+    final familyNetWorth = RxString(
+      controller.activeFilter.value?.familyNetWorth ?? 'Any',
     );
     final education = RxString(
-      controller.activeFilter.value?.education ?? 'Any Education',
+      controller.activeFilter.value?.education ?? 'Any',
     );
-    final job = RxString(controller.activeFilter.value?.job ?? 'Any Job');
-    final dosham = RxString(
-      controller.activeFilter.value?.dosham ?? 'Any Dosham',
+    final highestEducation = RxString(
+      controller.activeFilter.value?.highestEducation ?? 'Any',
     );
+    final occupation = RxString(
+      controller.activeFilter.value?.occupation ?? 'Any',
+    );
+    final dosham = RxString(controller.activeFilter.value?.dosham ?? 'Any');
+    final caste = RxString(controller.activeFilter.value?.caste ?? 'Any');
     final maritalStatus = RxString(
-      controller.activeFilter.value?.maritalStatus ?? 'Any Status',
+      controller.activeFilter.value?.maritalStatus ?? 'Any',
     );
-    final country = RxString(
-      controller.activeFilter.value?.country ?? 'Select Countries',
+    final workCountry = RxString(
+      controller.activeFilter.value?.workCountry ?? 'Any',
     );
+
+    final ageOptions = List.generate(43, (index) => (index + 18).toString());
 
     Get.bottomSheet(
       Container(
-        height: Get.height * 0.7,
+        height: Get.height * 0.8,
         padding: const EdgeInsets.all(20),
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -243,7 +244,7 @@ class MatchesView extends GetView<MatchesController> {
                     onPressed: () => controller.resetFilters(),
                     child: const CommonText(
                       'Reset All',
-                      style: TextStyle(color: _kPrimary, fontSize: 16),
+                      style: TextStyle(color: AppColors.primary, fontSize: 16),
                     ),
                   ),
                 ],
@@ -258,7 +259,7 @@ class MatchesView extends GetView<MatchesController> {
                     child: Obx(
                       () => _buildDropdown(
                         value: minAge.value.toString(),
-                        items: controller.ageOptions,
+                        items: ageOptions,
                         onChanged: (v) => minAge.value = int.parse(v!),
                         hint: 'Min',
                       ),
@@ -269,7 +270,7 @@ class MatchesView extends GetView<MatchesController> {
                     child: Obx(
                       () => _buildDropdown(
                         value: maxAge.value.toString(),
-                        items: controller.ageOptions,
+                        items: ageOptions,
                         onChanged: (v) => maxAge.value = int.parse(v!),
                         hint: 'Max',
                       ),
@@ -293,35 +294,52 @@ class MatchesView extends GetView<MatchesController> {
               ),
               const SizedBox(height: 20),
 
+              // Family Net Worth
+              _buildFilterLabel(
+                Icons.currency_rupee_rounded,
+                'FAMILY NET WORTH',
+              ),
+              Obx(
+                () => _buildDropdown(
+                  value: familyNetWorth.value,
+                  items: controller.incomeOptions,
+                  onChanged: (v) => familyNetWorth.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
               // Education
               _buildFilterLabel(Icons.school_outlined, 'EDUCATION'),
               Obx(
                 () => _buildDropdown(
                   value: education.value,
-                  items: controller.educationOptions,
+                  items: ['Any', ...controller.educations.map((e) => e.name)],
                   onChanged: (v) => education.value = v!,
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Family Income
-              _buildFilterLabel(Icons.currency_rupee_rounded, 'FAMILY INCOME'),
+              // Highest Education
+              _buildFilterLabel(
+                Icons.workspace_premium_outlined,
+                'HIGHEST EDUCATION',
+              ),
               Obx(
                 () => _buildDropdown(
-                  value: familyIncome.value,
-                  items: controller.incomeOptions,
-                  onChanged: (v) => familyIncome.value = v!,
+                  value: highestEducation.value,
+                  items: ['Any', ...controller.educations.map((e) => e.name)],
+                  onChanged: (v) => highestEducation.value = v!,
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Job
-              _buildFilterLabel(Icons.card_travel_rounded, 'JOB'),
+              // Occupation
+              _buildFilterLabel(Icons.card_travel_rounded, 'OCCUPATION'),
               Obx(
                 () => _buildDropdown(
-                  value: job.value,
-                  items: controller.jobOptions,
-                  onChanged: (v) => job.value = v!,
+                  value: occupation.value,
+                  items: ['Any', ...controller.occupations.map((e) => e.name)],
+                  onChanged: (v) => occupation.value = v!,
                 ),
               ),
               const SizedBox(height: 20),
@@ -331,8 +349,19 @@ class MatchesView extends GetView<MatchesController> {
               Obx(
                 () => _buildDropdown(
                   value: dosham.value,
-                  items: controller.doshamOptions,
+                  items: ['Any', ...controller.doshams.map((e) => e.name)],
                   onChanged: (v) => dosham.value = v!,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Caste
+              _buildFilterLabel(Icons.people_outline_rounded, 'CASTE'),
+              Obx(
+                () => _buildDropdown(
+                  value: caste.value,
+                  items: ['Any', ...controller.castes.map((e) => e.name)],
+                  onChanged: (v) => caste.value = v!,
                 ),
               ),
               const SizedBox(height: 20),
@@ -358,9 +387,9 @@ class MatchesView extends GetView<MatchesController> {
               ),
               Obx(
                 () => _buildDropdown(
-                  value: country.value,
+                  value: workCountry.value,
                   items: controller.countryOptions,
-                  onChanged: (v) => country.value = v!,
+                  onChanged: (v) => workCountry.value = v!,
                 ),
               ),
               const SizedBox(height: 30),
@@ -371,17 +400,19 @@ class MatchesView extends GetView<MatchesController> {
                     minAge: minAge.value,
                     maxAge: maxAge.value,
                     annualIncome: annualIncome.value,
-                    familyIncome: familyIncome.value,
+                    familyNetWorth: familyNetWorth.value,
                     education: education.value,
-                    job: job.value,
+                    highestEducation: highestEducation.value,
+                    occupation: occupation.value,
                     dosham: dosham.value,
+                    caste: caste.value,
                     maritalStatus: maritalStatus.value,
-                    country: country.value,
+                    workCountry: workCountry.value,
                   );
                   controller.applyFilters(filter);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _kPrimary,
+                  backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 56),
                   shape: RoundedRectangleBorder(
@@ -408,14 +439,14 @@ class MatchesView extends GetView<MatchesController> {
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: _kAccent),
+          Icon(icon, size: 18, color: AppColors.accent),
           const SizedBox(width: 8),
           CommonText(
             label,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: _kTextSecondary,
+              color: AppColors.textGrey,
               letterSpacing: 1.2,
             ),
           ),
@@ -430,6 +461,14 @@ class MatchesView extends GetView<MatchesController> {
     required ValueChanged<String?> onChanged,
     String? hint,
   }) {
+    // Ensure unique items and prevent duplicate 'Any' if it exists in data
+    final uniqueItems = items.toSet().toList();
+
+    // Ensure value exists in uniqueItems to avoid dropdown error
+    String safeValue = uniqueItems.contains(value)
+        ? value
+        : (uniqueItems.isNotEmpty ? uniqueItems.first : '');
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -439,16 +478,16 @@ class MatchesView extends GetView<MatchesController> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          value: items.contains(value) ? value : items.first,
+          value: safeValue.isEmpty ? null : safeValue,
           isExpanded: true,
           hint: hint != null ? CommonText(hint) : null,
-          items: items
+          items: uniqueItems
               .map(
                 (e) => DropdownMenuItem(
                   value: e,
                   child: CommonText(
                     e,
-                    style: const TextStyle(color: _kTextPrimary),
+                    style: const TextStyle(color: AppColors.textDark),
                   ),
                 ),
               )
@@ -539,7 +578,7 @@ class _TinderMatchCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: _kPrimary,
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: CommonText(
@@ -566,7 +605,7 @@ class _TinderMatchCard extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.verified_rounded,
-                      color: _kAccent,
+                      color: AppColors.accent,
                       size: 20,
                     ),
                   ),
@@ -607,7 +646,7 @@ class _MatchGridCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: _kCard,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -651,7 +690,7 @@ class _MatchGridCard extends StatelessWidget {
                           ),
                           child: const Icon(
                             Icons.verified_rounded,
-                            color: _kAccent,
+                            color: AppColors.accent,
                             size: 16,
                           ),
                         ),
@@ -689,7 +728,7 @@ class _MatchGridCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: _kTextPrimary,
+                          color: AppColors.textDark,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -699,7 +738,7 @@ class _MatchGridCard extends StatelessWidget {
                         '${match.age} yrs · ${match.height}',
                         style: const TextStyle(
                           fontSize: 11,
-                          color: _kTextSecondary,
+                          color: AppColors.textGrey,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -711,7 +750,7 @@ class _MatchGridCard extends StatelessWidget {
                           arguments: match,
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: _kPrimary,
+                          backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(double.infinity, 36),
                           padding: EdgeInsets.zero,
@@ -791,7 +830,10 @@ class _PhotoPlaceholder extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_kPrimary.withOpacity(0.1), _kPrimary.withOpacity(0.2)],
+          colors: [
+            AppColors.primary.withOpacity(0.1),
+            AppColors.primary.withOpacity(0.2),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -805,7 +847,11 @@ class _PhotoPlaceholder extends StatelessWidget {
             left: 40,
             child: Opacity(
               opacity: 0.15,
-              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 24),
+              child: Icon(
+                Icons.auto_awesome,
+                color: AppColors.primary,
+                size: 24,
+              ),
             ),
           ),
           Positioned(
@@ -813,7 +859,11 @@ class _PhotoPlaceholder extends StatelessWidget {
             right: 40,
             child: Opacity(
               opacity: 0.1,
-              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 32),
+              child: Icon(
+                Icons.auto_awesome,
+                color: AppColors.primary,
+                size: 32,
+              ),
             ),
           ),
           Positioned(
@@ -821,7 +871,11 @@ class _PhotoPlaceholder extends StatelessWidget {
             right: 60,
             child: Opacity(
               opacity: 0.08,
-              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 20),
+              child: Icon(
+                Icons.auto_awesome,
+                color: AppColors.primary,
+                size: 20,
+              ),
             ),
           ),
 
@@ -832,7 +886,7 @@ class _PhotoPlaceholder extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: _kPrimary.withOpacity(0.05),
+                color: AppColors.primary.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
@@ -844,7 +898,7 @@ class _PhotoPlaceholder extends StatelessWidget {
             style: const TextStyle(
               fontSize: 80,
               fontWeight: FontWeight.bold,
-              color: _kPrimary,
+              color: AppColors.primary,
               letterSpacing: 2,
             ),
           ),
@@ -855,7 +909,11 @@ class _PhotoPlaceholder extends StatelessWidget {
             left: 60,
             child: Opacity(
               opacity: 0.2,
-              child: Icon(Icons.auto_awesome, color: _kPrimary, size: 24),
+              child: Icon(
+                Icons.auto_awesome,
+                color: AppColors.primary,
+                size: 24,
+              ),
             ),
           ),
         ],

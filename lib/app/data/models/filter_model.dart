@@ -2,43 +2,47 @@ class FilterModel {
   int? minAge;
   int? maxAge;
   String? annualIncome;
-  String? familyIncome;
+  String? familyNetWorth;
   String? education;
-  String? job;
+  String? highestEducation;
+  String? occupation;
   String? dosham;
+  String? caste;
+  String? workCountry;
   String? maritalStatus;
-  String? country;
 
   FilterModel({
     this.minAge,
     this.maxAge,
     this.annualIncome,
-    this.familyIncome,
+    this.familyNetWorth,
     this.education,
-    this.job,
+    this.highestEducation,
+    this.occupation,
     this.dosham,
+    this.caste,
+    this.workCountry,
     this.maritalStatus,
-    this.country,
   });
 
   Map<String, dynamic> toJson() {
     return {
       if (minAge != null) 'minAge': minAge,
       if (maxAge != null) 'maxAge': maxAge,
-      if (annualIncome != null && annualIncome != 'Any Income')
-        'annualIncome': annualIncome!.toLowerCase().replaceAll(' ', '-'),
-      if (familyIncome != null && familyIncome != 'Any Income')
-        'familyIncome': familyIncome!.toLowerCase().replaceAll(' ', '-'),
-      if (education != null && education != 'Any Education')
-        'education': education!.toLowerCase().replaceAll(' ', '-'),
-      if (job != null && job != 'Any Job')
-        'occupation': job!.toLowerCase().replaceAll(' ', '-'),
-      if (dosham != null && dosham != 'Any Dosham')
-        'yourDosham': dosham!.toLowerCase().replaceAll(' ', '-'),
-      if (maritalStatus != null && maritalStatus != 'Any Status')
-        'maritalStatus': maritalStatus!.toLowerCase().replaceAll(' ', '-'),
-      if (country != null && country != 'Select Countries')
-        'workLocation': country,
+      if (annualIncome != null && annualIncome != 'Any')
+        'annualIncome': annualIncome,
+      if (familyNetWorth != null && familyNetWorth != 'Any')
+        'familyNetWorth': familyNetWorth,
+      if (education != null && education != 'Any') 'education': education,
+      if (highestEducation != null && highestEducation != 'Any')
+        'highestEducation': highestEducation,
+      if (occupation != null && occupation != 'Any') 'occupation': occupation,
+      if (dosham != null && dosham != 'Any') 'dosham': dosham,
+      if (caste != null && caste != 'Any') 'caste': caste,
+      if (workCountry != null && workCountry != 'Any')
+        'workCountry': workCountry,
+      if (maritalStatus != null && maritalStatus != 'Any')
+        'maritalStatus': maritalStatus,
     };
   }
 }
