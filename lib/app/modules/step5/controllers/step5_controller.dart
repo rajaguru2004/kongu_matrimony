@@ -11,10 +11,13 @@ class Step5Controller extends GetxController {
   final RxInt partnerMinAge = 18.obs;
   final RxInt partnerMaxAge = 60.obs;
   final RxString partnerMaritalStatus = 'Unmarried'.obs;
-  final partnerEducationController = TextEditingController();
-  final partnerProfessionController = TextEditingController();
+  final RxString partnerEducation = ''.obs;
+  final RxString partnerProfession = ''.obs;
+  final RxString partnerAnnualIncome = ''.obs;
   final partnerJobLocationController = TextEditingController();
-  final partnerAnnualIncomeController = TextEditingController();
+
+  final RxList<String> educationOptions = <String>[].obs;
+  final RxList<String> occupationOptions = <String>[].obs;
 
   final RxBool isLoading = false.obs;
 
@@ -28,18 +31,47 @@ class Step5Controller extends GetxController {
     "Doesn't Matter",
   ];
 
+  final List<String> incomeOptions = [
+    'Below 2 Lakhs',
+    '2 - 5 Lakhs',
+    '5 - 10 Lakhs',
+    '10 - 20 Lakhs',
+    'Above 20 Lakhs',
+  ];
+
   @override
   void onInit() {
     super.onInit();
     registerModel = Get.arguments as RegisterModel;
+    fetchDropdownData();
+  }
+
+  Future<void> fetchDropdownData() async {
+    isLoading.value = true;
+    try {
+      final educationsResponse = await _api.getSetupData(Endpoints.educations);
+      if (educationsResponse != null) {
+        educationOptions.assignAll(
+          educationsResponse.data.map((e) => e.name).toList(),
+        );
+      }
+
+      final occupationsResponse = await _api.getSetupData(
+        Endpoints.occupations,
+      );
+      if (occupationsResponse != null) {
+        occupationOptions.assignAll(
+          occupationsResponse.data.map((e) => e.name).toList(),
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override
   void onClose() {
-    partnerEducationController.dispose();
-    partnerProfessionController.dispose();
     partnerJobLocationController.dispose();
-    partnerAnnualIncomeController.dispose();
     super.onClose();
   }
 
@@ -50,9 +82,9 @@ class Step5Controller extends GetxController {
           'partnerMaritalStatus': partnerMaritalStatus.value
               .toLowerCase()
               .replaceAll(' ', '-'),
-          'partnerEducation': partnerEducationController.text.trim(),
-          'partnerProfession': partnerProfessionController.text.trim(),
-          'partnerAnnualInacome': partnerAnnualIncomeController.text.trim(),
+          'partnerEducation': partnerEducation.value.trim(),
+          'partnerProfession': partnerProfession.value.trim(),
+          'partnerAnnualInacome': partnerAnnualIncome.value.trim(),
         }, tag: 'signup_flow');
     isLoading.value = false;
 

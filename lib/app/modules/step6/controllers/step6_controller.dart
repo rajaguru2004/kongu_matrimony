@@ -12,6 +12,7 @@ class Step6Controller extends GetxController {
   final RxString partnerStar = 'Any'.obs;
   final RxString partnerRasi = 'Any'.obs;
   final RxString partnerDosham = 'No'.obs;
+  final RxList<String> partnerCasteOptions = <String>[].obs;
 
   final RxBool isLoading = false.obs;
 
@@ -68,6 +69,21 @@ class Step6Controller extends GetxController {
   void onInit() {
     super.onInit();
     registerModel = Get.arguments as RegisterModel;
+    fetchDropdownData();
+  }
+
+  Future<void> fetchDropdownData() async {
+    isLoading.value = true;
+    try {
+      final castesResponse = await _api.getSetupData(Endpoints.castes);
+      if (castesResponse != null) {
+        partnerCasteOptions.assignAll(
+          castesResponse.data.map((e) => e.name).toList(),
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> submitStep6() async {

@@ -4,6 +4,7 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:kongu_matrimony/app/data/models/filter_model.dart';
 import 'package:kongu_matrimony/app/data/models/interest_model.dart';
 import 'package:kongu_matrimony/app/data/models/matches_response_model.dart';
+import 'package:kongu_matrimony/app/data/models/setup_model.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
 
 class ApiService {
@@ -302,6 +303,14 @@ class ApiService {
       _showError('Unexpected error: $e');
       return false;
     }
+  }
+
+  Future<SetupDataModel?> getSetupData(String url) async {
+    final response = await get(url, tag: 'fetch_setup_data');
+    if (response != null) {
+      return SetupDataModel.fromJson(response);
+    }
+    return null;
   }
 
   Future<Map<String, dynamic>?> uploadImage({

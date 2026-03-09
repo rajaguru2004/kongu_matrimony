@@ -8,11 +8,6 @@ class InterestsView extends GetView<InterestsController> {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure the controller is registered since it might be navigated to directly or via MainView
-    if (!Get.isRegistered<InterestsController>()) {
-      Get.put(InterestsController());
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(

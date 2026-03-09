@@ -3,6 +3,7 @@ import 'package:dio/dio.dart' as dio_lib;
 import '../../../data/models/user_model.dart';
 import '../../../data/services/auth_service.dart';
 import '../../../endpoints.dart';
+import '../../../routes/app_pages.dart';
 
 class MyProfileController extends GetxController {
   final _dio = dio_lib.Dio();
@@ -46,5 +47,10 @@ class MyProfileController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> logout() async {
+    await AuthService.to.logout();
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

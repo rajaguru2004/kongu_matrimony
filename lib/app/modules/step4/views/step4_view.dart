@@ -30,11 +30,16 @@ class Step4View extends GetView<Step4Controller> {
             ),
             const SizedBox(height: 24),
 
-            buildStepTextField(
-              controller: controller.highestEducationController,
-              label: 'Highest Education *',
-              hint: 'Select Education',
-              icon: Icons.school_outlined,
+            Obx(
+              () => buildStepDropdown(
+                label: 'Highest Education *',
+                value: controller.highestEducation.value.isEmpty
+                    ? 'Select Education'
+                    : controller.highestEducation.value,
+                options: ['Select Education', ...controller.educationOptions],
+                onChanged: (v) => controller.highestEducation.value =
+                    v == 'Select Education' ? '' : v!,
+              ),
             ),
             const SizedBox(height: 14),
 

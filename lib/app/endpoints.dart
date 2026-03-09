@@ -1,7 +1,12 @@
 class Endpoints {
-  static const String baseUrl = "https://api.konguelitematrimony.co.in";
-  // static const String baseUrl = "https://api.uat.konguelitematrimony.co.in";
+  // static const String baseUrl = "https://api.konguelitematrimony.co.in";
+  static const String baseUrl = "https://api.uat.konguelitematrimony.co.in";
   static const String uploadImage = "$baseUrl/website/image/upload";
+  static const String setup = "$baseUrl/admin/setup";
+  static const String castes = "$setup/castes";
+  static const String doshams = "$setup/doshams";
+  static const String educations = "$setup/educations";
+  static const String occupations = "$setup/occupations";
 
   // Registration
   static const String registerBase = "$baseUrl/website/auth/register";

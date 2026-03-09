@@ -34,7 +34,7 @@ class Step6View extends GetView<Step6Controller> {
               () => buildStepDropdown(
                 label: 'Partner Caste',
                 value: controller.partnerCaste.value,
-                options: ['Any', 'Kongu Vellalar'],
+                options: ['Any', ...controller.partnerCasteOptions],
                 onChanged: (v) => controller.partnerCaste.value = v!,
               ),
             ),

@@ -50,7 +50,7 @@ class MyProfileView extends GetView<MyProfileController> {
 
         return CustomScrollView(
           slivers: [
-            _buildSliverAppBar(user),
+            _buildSliverAppBar(context, user),
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -76,7 +76,7 @@ class MyProfileView extends GetView<MyProfileController> {
     );
   }
 
-  Widget _buildSliverAppBar(user) {
+  Widget _buildSliverAppBar(BuildContext context, user) {
     final hasPhoto =
         user.profilePhotoUrl != null && user.profilePhotoUrl!.isNotEmpty;
     return SliverAppBar(
@@ -84,6 +84,13 @@ class MyProfileView extends GetView<MyProfileController> {
       pinned: true,
       backgroundColor: _kPrimary,
       iconTheme: const IconThemeData(color: Colors.white),
+      actions: [
+        IconButton(
+          onPressed: () => _showLogoutDialog(context),
+          icon: const Icon(Icons.logout, color: Colors.white),
+          tooltip: 'Logout',
+        ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
@@ -424,6 +431,37 @@ class MyProfileView extends GetView<MyProfileController> {
         ),
       ],
       border: Border.all(color: _kAccent.withAlpha(30)),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    Get.dialog(
+      AlertDialog(
+        title: const CommonText(
+          'Logout',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: const CommonText('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const CommonText(
+              'Cancel',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              controller.logout();
+            },
+            child: const CommonText(
+              'Yes, Logout',
+              style: TextStyle(color: _kPrimary, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

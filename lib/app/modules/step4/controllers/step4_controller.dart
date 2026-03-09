@@ -8,7 +8,7 @@ import 'package:kongu_matrimony/app/routes/app_pages.dart';
 class Step4Controller extends GetxController {
   late RegisterModel registerModel;
 
-  final highestEducationController = TextEditingController();
+  final RxString highestEducation = ''.obs;
   final additionalDegreeController = TextEditingController();
   final fatherNameController = TextEditingController();
   final motherNameController = TextEditingController();
@@ -23,6 +23,8 @@ class Step4Controller extends GetxController {
   final RxString motherOccupation = ''.obs;
   final RxString occupation = ''.obs;
   final RxString annualIncome = ''.obs;
+  final RxList<String> educationOptions = <String>[].obs;
+  final RxList<String> occupationOptions = <String>[].obs;
 
   final RxBool isLoading = false.obs;
 
@@ -38,19 +40,6 @@ class Step4Controller extends GetxController {
     'Enter Myself',
   ];
 
-  final List<String> occupationOptions = [
-    'Software Engineer',
-    'Teacher/Professor',
-    'Doctor',
-    'Engineer',
-    'Manager',
-    'Banker',
-    'Police/Military',
-    'Farmer',
-    'Business Person',
-    'Other',
-  ];
-
   final List<String> incomeOptions = [
     'Below 2 Lakhs',
     '2 - 5 Lakhs',
@@ -63,11 +52,34 @@ class Step4Controller extends GetxController {
   void onInit() {
     super.onInit();
     registerModel = Get.arguments as RegisterModel;
+    fetchDropdownData();
+  }
+
+  Future<void> fetchDropdownData() async {
+    isLoading.value = true;
+    try {
+      final educationsResponse = await _api.getSetupData(Endpoints.educations);
+      if (educationsResponse != null) {
+        educationOptions.assignAll(
+          educationsResponse.data.map((e) => e.name).toList(),
+        );
+      }
+
+      final occupationsResponse = await _api.getSetupData(
+        Endpoints.occupations,
+      );
+      if (occupationsResponse != null) {
+        occupationOptions.assignAll(
+          occupationsResponse.data.map((e) => e.name).toList(),
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override
   void onClose() {
-    highestEducationController.dispose();
     additionalDegreeController.dispose();
     fatherNameController.dispose();
     motherNameController.dispose();
@@ -80,8 +92,8 @@ class Step4Controller extends GetxController {
   }
 
   Future<void> submitStep4() async {
-    if (highestEducationController.text.trim().isEmpty) {
-      Get.snackbar('Validation', 'Please enter your highest education');
+    if (highestEducation.value.isEmpty) {
+      Get.snackbar('Validation', 'Please select your highest education');
       return;
     }
     if (occupation.value.isEmpty) {
@@ -100,7 +112,7 @@ class Step4Controller extends GetxController {
     isLoading.value = true;
     final response = await _api
         .post(Endpoints.step3(registerModel.registerId), {
-          'highestEducation': highestEducationController.text
+          'highestEducation': highestEducation.value
               .trim()
               .toLowerCase()
               .replaceAll(' ', '-'),

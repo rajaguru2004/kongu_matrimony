@@ -43,27 +43,42 @@ class Step5View extends GetView<Step5Controller> {
             ),
             const SizedBox(height: 14),
 
-            buildStepTextField(
-              controller: controller.partnerEducationController,
-              label: 'Education',
-              hint: "e.g. Bachelor's Degree",
-              icon: Icons.school_outlined,
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Education',
+                value: controller.partnerEducation.value.isEmpty
+                    ? 'Select Education'
+                    : controller.partnerEducation.value,
+                options: ['Select Education', ...controller.educationOptions],
+                onChanged: (v) => controller.partnerEducation.value =
+                    v == 'Select Education' ? '' : v!,
+              ),
             ),
             const SizedBox(height: 14),
 
-            buildStepTextField(
-              controller: controller.partnerProfessionController,
-              label: 'Profession',
-              hint: 'e.g. Software Engineer',
-              icon: Icons.work_outline,
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Profession',
+                value: controller.partnerProfession.value.isEmpty
+                    ? 'Select Occupation'
+                    : controller.partnerProfession.value,
+                options: ['Select Occupation', ...controller.occupationOptions],
+                onChanged: (v) => controller.partnerProfession.value =
+                    v == 'Select Occupation' ? '' : v!,
+              ),
             ),
             const SizedBox(height: 14),
 
-            buildStepTextField(
-              controller: controller.partnerAnnualIncomeController,
-              label: 'Annual Income',
-              hint: 'e.g. 6,00,000 INR',
-              icon: Icons.currency_rupee,
+            Obx(
+              () => buildStepDropdown(
+                label: 'Partner Annual Income',
+                value: controller.partnerAnnualIncome.value.isEmpty
+                    ? 'Select Income'
+                    : controller.partnerAnnualIncome.value,
+                options: ['Select Income', ...controller.incomeOptions],
+                onChanged: (v) => controller.partnerAnnualIncome.value =
+                    v == 'Select Income' ? '' : v!,
+              ),
             ),
 
             const SizedBox(height: 40),

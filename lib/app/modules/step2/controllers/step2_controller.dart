@@ -14,18 +14,14 @@ class Step2Controller extends GetxController {
   final RxString rasi = ''.obs;
   final RxString star = ''.obs;
   final RxString dosham = ''.obs;
+  final RxList<String> casteOptions = <String>[].obs;
+  final RxList<String> doshamOptions = <String>[].obs;
   final RxString horoscopeFileUrl = ''.obs;
   final RxString horoscopeFilePath = ''.obs;
   final RxBool isLoading = false.obs;
 
   final _api = ApiService();
   final _picker = ImagePicker();
-
-  final List<String> casteOptions = [
-    'Kongu Vellalar Gounder',
-    'Vettuva Gounder',
-    'Nattu Gounder',
-  ];
 
   final List<String> rasiOptions = [
     'Mesham (Aries)',
@@ -72,17 +68,30 @@ class Step2Controller extends GetxController {
     'Revati',
   ];
 
-  final List<String> doshamOptions = [
-    'None',
-    'Sevvai Dosham',
-    'Sarpa Dosham (Ragu/Kethu)',
-    'Kala Sarpa Dosham',
-  ];
-
   @override
   void onInit() {
     super.onInit();
     registerModel = Get.arguments as RegisterModel;
+    fetchDropdownData();
+  }
+
+  Future<void> fetchDropdownData() async {
+    isLoading.value = true;
+    try {
+      final castesResponse = await _api.getSetupData(Endpoints.castes);
+      if (castesResponse != null) {
+        casteOptions.assignAll(castesResponse.data.map((e) => e.name).toList());
+      }
+
+      final doshamsResponse = await _api.getSetupData(Endpoints.doshams);
+      if (doshamsResponse != null) {
+        doshamOptions.assignAll(
+          doshamsResponse.data.map((e) => e.name).toList(),
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override
