@@ -6,6 +6,7 @@ import 'package:kongu_matrimony/app/data/models/register_model.dart';
 import 'package:kongu_matrimony/app/data/services/api_service.dart';
 import 'package:kongu_matrimony/app/endpoints.dart';
 import 'package:kongu_matrimony/app/routes/app_pages.dart';
+import 'package:kongu_matrimony/app/utils/app_colors.dart';
 
 class Step1Controller extends GetxController {
   late RegisterModel registerModel;
@@ -55,7 +56,7 @@ class Step1Controller extends GetxController {
       lastDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.light(primary: Color(0xFFE07B39)),
+          colorScheme: const ColorScheme.light(primary: AppColors.accent),
         ),
         child: child!,
       ),
@@ -71,7 +72,7 @@ class Step1Controller extends GetxController {
       initialTime: TimeOfDay.now(),
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.light(primary: Color(0xFFE07B39)),
+          colorScheme: const ColorScheme.light(primary: AppColors.accent),
         ),
         child: child!,
       ),

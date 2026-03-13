@@ -25,7 +25,7 @@ class Step5View extends GetView<Step5Controller> {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1A4B),
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(height: 24),

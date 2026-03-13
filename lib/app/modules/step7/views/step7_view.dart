@@ -26,7 +26,7 @@ class Step7View extends GetView<Step7Controller> {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1A4B),
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(height: 12),
@@ -43,7 +43,7 @@ class Step7View extends GetView<Step7Controller> {
                 border: Border.all(color: AppColors.border),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF000000).withOpacity(0.05),
+                    color: AppColors.cardShadow,
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),

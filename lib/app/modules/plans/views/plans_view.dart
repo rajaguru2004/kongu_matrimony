@@ -364,7 +364,7 @@ class _PlanCard extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: buying
                         ? [Colors.grey.shade400, Colors.grey.shade400]
-                        : [AppColors.accent, const Color(0xFFF5CB5C)],
+                        : [AppColors.accent, AppColors.accentLight],
                   ),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: buying

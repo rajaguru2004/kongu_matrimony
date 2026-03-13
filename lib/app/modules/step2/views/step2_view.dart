@@ -25,13 +25,13 @@ class Step2View extends GetView<Step2Controller> {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1A4B),
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               'Tell us about your religious and community background',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 14, color: AppColors.textGrey),
             ),
             const SizedBox(height: 24),
 

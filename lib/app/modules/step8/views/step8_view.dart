@@ -30,7 +30,7 @@ class Step8View extends GetView<Step8Controller> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1A4B),
+                      color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 8),
